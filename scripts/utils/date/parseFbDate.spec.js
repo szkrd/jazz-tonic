@@ -1,4 +1,4 @@
-const parseDate = require('./parseDate');
+const parseDate = require('./parseFbDate');
 
 describe('parseDate', () => {
   it('should parse dates', () => {

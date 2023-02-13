@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const parseDate = require('./parseDate');
+const parseDate = require('./parseFbDate');
 
 const values = [
   '1 APR AT 23:00 – 2 APR AT 09:00',

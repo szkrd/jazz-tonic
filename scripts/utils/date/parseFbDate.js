@@ -1,12 +1,11 @@
+const { last, escapeRegExp } = require('lodash');
 const dayjs = require('dayjs');
 const utcPlugin = require('dayjs/plugin/utc');
 const timezonePlugin = require('dayjs/plugin/timezone');
+const newRex = require('../regexp/newRex');
 
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
-
-const { last, escapeRegExp } = require('lodash');
-const newRex = require('./newRex');
 
 const DEBUG = false;
 const LOCAL_TZ = 'Europe/Budapest';

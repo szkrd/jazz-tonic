@@ -104,4 +104,6 @@ dist
 .tern-port
 
 client/index.html
+data/*.json
+data/*.xlsx
 output.txt
