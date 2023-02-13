@@ -8,6 +8,7 @@ dayjs.extend(timezonePlugin);
 const { last, escapeRegExp } = require('lodash');
 const newRex = require('./newRex');
 
+const DEBUG = false;
 const LOCAL_TZ = 'Europe/Budapest';
 const RANGE_MARKER = ' – ';
 const TODAY = 'TODAY';
@@ -67,7 +68,6 @@ module.exports = function parseDate(text, parsedAt, raw = false) {
     text = text.replace(new RegExp('^' + escapeRegExp(`${THIS} `)), '').trim();
   }
   // handle utc data (event was added probably in another timezone?)
-  // TODO use this offset? can we know the TZ offset of Budapest (back then and not now)?
   let utcOffset = 0;
   if (/UTC[+-]\d+/.test(text)) {
     const matches = text.match(/UTC([+-]\d+)/);
@@ -183,8 +183,7 @@ module.exports = function parseDate(text, parsedAt, raw = false) {
   if (startDate && typeof startDate === 'object') startDate = startDate.format(OUT_FORMAT);
   if (endDate && typeof endDate === 'object') endDate = endDate.format(OUT_FORMAT);
 
-  // debug
-  // console.log('DATE PARSING OUTPUT >>>>>>>>>>>>>>>>>>>', text, '->', startDate);
+  if (DEBUG) console.log(`DATE PARSING OUTPUT NORMALIZATION: "${origText}" -> "${text}"`);
 
   // finally
   if (raw) return startDate;
