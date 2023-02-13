@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const xlsx = require('xlsx');
-const xlsJsonToRows = require('./utils/xlsJsonToRows');
-const chalk = require('chalk');
-const extractPlaceId = require('./utils/extractPlaceId');
+const xlsJsonToRows = require('./utils/xlsx/xlsJsonToRows');
+const extractUrlId = require('./utils/string/extractUrlId');
 const slugify = require('./utils/string/slugify');
 
 const TABS = {
@@ -40,7 +39,7 @@ function parsePlaces() {
   // rowIdx, name, address, fbEventUrl, url, email + we will add urlId
   rows.forEach((row) => {
     row.nameId = slugify(row.name);
-    row.urlId = extractPlaceId(row.fbEventUrl, row.url);
+    row.urlId = extractUrlId(row.fbEventUrl || row.url);
   });
   fs.writeFileSync(path.join(dataDir, LOCATIONS.placesOutputFileName), JSON.stringify(rows, null, 2), 'utf-8');
   console.info('Done.');
