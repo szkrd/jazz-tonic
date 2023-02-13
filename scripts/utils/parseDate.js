@@ -1,7 +1,14 @@
 const dayjs = require('dayjs');
+const utcPlugin = require('dayjs/plugin/utc');
+const timezonePlugin = require('dayjs/plugin/timezone');
+
+dayjs.extend(utcPlugin);
+dayjs.extend(timezonePlugin);
+
 const { last, escapeRegExp } = require('lodash');
 const newRex = require('./newRex');
 
+const LOCAL_TZ = 'Europe/Budapest';
 const RANGE_MARKER = ' – ';
 const TODAY = 'TODAY';
 const TOMORROW = 'TOMORROW';
@@ -61,7 +68,6 @@ module.exports = function parseDate(text, parsedAt, raw = false) {
   }
   // handle utc data (event was added probably in another timezone?)
   // TODO use this offset? can we know the TZ offset of Budapest (back then and not now)?
-  let thisMachinesUtcOffset = (new Date().getTimezoneOffset() * -1) / 60;
   let utcOffset = 0;
   if (/UTC[+-]\d+/.test(text)) {
     const matches = text.match(/UTC([+-]\d+)/);
@@ -72,9 +78,6 @@ module.exports = function parseDate(text, parsedAt, raw = false) {
       }
       text = text.replace(/UTC[+-]\d+/, '').trim();
     }
-  }
-  if (utcOffset && utcOffset !== thisMachinesUtcOffset) {
-    error(origText, `possible timezone mismatch? ${utcOffset} vs ${thisMachinesUtcOffset}`);
   }
   // cut off the "and X more" suffix
   if (/AND \d+ MORE/.test(text)) {
@@ -166,6 +169,13 @@ module.exports = function parseDate(text, parsedAt, raw = false) {
       done = true;
       startDate = dayjs(`${year}-${month}-${day}T${time[0]}`);
       if (time.length === 2) endDate = dayjs(`${year}-${month}-${day}T${time[1]}`);
+    }
+  }
+
+  if (startDate && utcOffset) {
+    const localTzHours = (dayjs.tz(startDate, LOCAL_TZ).toDate().getTimezoneOffset() * -1) / 60;
+    if (utcOffset !== localTzHours) {
+      error(origText, `possible timezone mismatch for ${LOCAL_TZ}? Values: ${utcOffset} vs ${localTzHours}`);
     }
   }
 
