@@ -9,7 +9,7 @@ module.exports = function slugify(text = '') {
   return removeAccents(String(text || ''))
     .toLocaleLowerCase()
     .replace(/\.(hu|com|sk)/, '')
-    .replace(/[\s.\-_:,&'"]/g, '')
+    .replace(/[\s.\-_:,&’'"„”]/g, '')
     .replaceAll('-', '')
     .replaceAll('–', '')
     .replace(/\([^)]*\)/g, '');
