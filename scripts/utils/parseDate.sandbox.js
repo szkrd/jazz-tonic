@@ -215,7 +215,6 @@ const values = [
   'MONDAY, 6 MARCH 2023 FROM 18:30-22:00',
   'MONDAY, 6 MARCH 2023 FROM 19:00-20:15',
   'MONDAY, 8 MAY 2023 AT 18:00',
-  'null',
   'SATURDAY, 1 APRIL 2023 AT 18:00',
   'SATURDAY, 1 APRIL 2023 AT 19:00',
   'SATURDAY, 1 APRIL 2023 AT 19:30',
@@ -752,15 +751,16 @@ const values = [
 
 let errorCount = 0;
 const parseAtDate = '2023-02-13';
+const silent = false;
 const maxLen = values.map((x) => x.length).sort((a, b) => a > b)[values.length - 1] + 10;
 for (let idx = 0; idx < values.length; idx++) {
   const date = values[idx];
   const output = parseDate(date, parseAtDate);
-  if (output) {
-    console.log(`${date.padEnd(maxLen)} | ${output.startDate} | ${output?.endDate ?? '-'}`);
+  if (output && output.startDate) {
+    if (!silent) console.log(`${date.padEnd(maxLen)} | ${output.startDate} | ${output?.endDate ?? '-'}`);
   } else {
     errorCount++;
-    console.log(chalk.red(`${date.padEnd(maxLen)} | invalid"`));
+    console.log(chalk.red(`${date.padEnd(maxLen)} | invalid`));
   }
 }
 
