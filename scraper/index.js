@@ -7,7 +7,6 @@ const extractUrlId = require('../scripts/utils/string/extractUrlId');
   const pup = { browser: null, page: null };
   const quit = getQuitFn(pup);
   async function handleExit() {
-    console.log('1>>>');
     await quit(0, 'Closing chrome, good bye!');
   }
   process.on('SIGINT', handleExit);
@@ -101,6 +100,7 @@ const extractUrlId = require('../scripts/utils/string/extractUrlId');
         els.map((linkEl) => {
           let el = linkEl;
           const title = (el.innerText || el.textContent).trim();
+          if (!title) return null;
           const eventUrl = el.getAttribute('href');
           let date = '';
           const maxUp = 10;
@@ -119,6 +119,7 @@ const extractUrlId = require('../scripts/utils/string/extractUrlId');
           return { title, eventUrl, date };
         })
       )) || [];
+    eventList = eventList.filter((item) => item).map((item) => ({ ...item, url, urlId }));
     console.info(eventList);
   }
 
