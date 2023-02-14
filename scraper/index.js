@@ -1,7 +1,9 @@
+const dayjs = require('dayjs');
 const puppeteer = require('puppeteer-core');
 const config = require('./config.json');
 const { getQuitFn, getPuppArgs, sleep, loadSession, saveSession, log } = require('./utils');
 const extractUrlId = require('../scripts/utils/string/extractUrlId');
+const parseFbDate = require('../scripts/utils/date/parseFbDate');
 
 (async () => {
   const pup = { browser: null, page: null };
@@ -95,6 +97,7 @@ const extractUrlId = require('../scripts/utils/string/extractUrlId');
 
     // parsing the small cards
     const eventLinkOnCardStartsWith = 'https://www.facebook.com/events/';
+    const parseAtDate = dayjs().format('YYYY-MM-DD');
     let eventList =
       (await page.$$eval(`a[href^="${eventLinkOnCardStartsWith}"][role="link"]`, (els) =>
         els.map((linkEl) => {
@@ -119,7 +122,9 @@ const extractUrlId = require('../scripts/utils/string/extractUrlId');
           return { title, eventUrl, date };
         })
       )) || [];
-    eventList = eventList.filter((item) => item).map((item) => ({ ...item, url, urlId }));
+    eventList = eventList
+      .filter((item) => item)
+      .map((item) => ({ ...item, url, urlId, dateParsed: parseFbDate(item.date, parseAtDate) }));
     console.info(eventList);
   }
 
