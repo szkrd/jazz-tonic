@@ -1,9 +1,7 @@
-const fs = require('fs');
 const path = require('path');
 const xlsx = require('xlsx');
-const xlsJsonToRows = require('./utils/xlsx/xlsJsonToRows');
-const extractUrlId = require('./utils/string/extractUrlId');
-const slugify = require('./utils/string/slugify');
+const parseEvents = require('./parseEvents');
+const parsePlaces = require('./parsePlaces');
 
 const TABS = {
   places: 'places',
@@ -14,6 +12,7 @@ const LOCATIONS = {
   dataDir: '../data',
   xlsxFileName: 'main.xlsx',
   placesOutputFileName: 'places.json',
+  eventsOutputFileName: 'events.json',
 };
 
 const dataDir = path.join(path.dirname(process.argv[1]).replace(/\\/g, '/'), LOCATIONS.dataDir);
@@ -30,33 +29,13 @@ function precheckSheets() {
   }
 }
 
-function parsePlaces() {
-  console.info('Parsing places...');
-  const places = workbook.Sheets[TABS.places];
-  const json = xlsx.utils.sheet_to_json(places, { blankrows: false, defval: null });
-  const rows = xlsJsonToRows(json);
-  // now places have the following cols:
-  // rowIdx, name, address, fbEventUrl, url, email + we will add urlId
-  rows.forEach((row) => {
-    row.nameId = slugify(row.name);
-    row.urlId = extractUrlId(row.fbEventUrl || row.url);
-  });
-  fs.writeFileSync(path.join(dataDir, LOCATIONS.placesOutputFileName), JSON.stringify(rows, null, 2), 'utf-8');
-  console.info('Done.');
-}
 function main() {
   precheckSheets();
-  parsePlaces();
+  const placesJsonFileName = path.join(dataDir, LOCATIONS.placesOutputFileName);
+  const placesData = parsePlaces(placesJsonFileName, workbook.Sheets[TABS.places]);
+  const eventsJsonFileName = path.join(dataDir, LOCATIONS.eventsOutputFileName);
+  parseEvents(eventsJsonFileName, '2023-02-13', workbook.Sheets[TABS.main], placesData);
+  // todo: denormalize
 }
 
 main();
-
-// xlsx.set_fs(fs);
-
-// /* load 'stream' for stream support */
-// import { Readable } from 'stream';
-// xlsx.stream.set_readable(Readable);
-
-// /* load the codepage support library for extended support with older formats  */
-// import * as cpexcel from 'xlsx/dist/cpexcel.full.mjs';
-// xlsx.set_cptable(cpexcel);

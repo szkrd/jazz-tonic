@@ -4,6 +4,7 @@
 module.exports = function removeAccents(text = '') {
   return text
     .replaceAll('ć', 'c')
+    .replaceAll('č', 'c')
     .replaceAll('ñ', 'n')
     .replaceAll('é', 'e')
     .replaceAll('ö', 'o')
@@ -29,6 +30,7 @@ module.exports = function removeAccents(text = '') {
     .replaceAll('À', 'A')
     .replaceAll('Á', 'A')
     .replaceAll('Ć', 'C')
+    .replaceAll('Č', 'C')
     .replaceAll('Ï', 'I')
     .replaceAll('Í', 'I');
 };
