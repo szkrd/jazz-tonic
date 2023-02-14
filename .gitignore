@@ -109,3 +109,4 @@ data/*.xlsx
 output.txt
 scraper/config.json
 scraper/session.json
+scraper/session.json.old
