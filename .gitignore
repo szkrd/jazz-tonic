@@ -107,3 +107,5 @@ client/index.html
 data/*.json
 data/*.xlsx
 output.txt
+scraper/config.json
+scraper/session.json
