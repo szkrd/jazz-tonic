@@ -1,9 +1,9 @@
 const fs = require('fs');
 const xlsx = require('xlsx');
-const parseFbDate = require('./utils/date/parseFbDate');
-const extractUrlId = require('./utils/string/extractUrlId');
-const slugify = require('./utils/string/slugify');
-const xlsJsonToRows = require('./utils/xlsx/xlsJsonToRows');
+const parseFbDate = require('../utils/date/parseFbDate');
+const extractUrlId = require('../utils/string/extractUrlId');
+const slugify = require('../utils/string/slugify');
+const xlsJsonToRows = require('../utils/xlsx/xlsJsonToRows');
 
 module.exports = function parseEvents(fileName, parseDate, eventsXlsx, placesData) {
   console.info('Parsing events...');

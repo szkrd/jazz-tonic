@@ -112,3 +112,4 @@ scraper/config.json
 scraper/output.json
 scraper/session.json
 scraper/session.json.old
+parserConfig.json

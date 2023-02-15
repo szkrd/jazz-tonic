@@ -1,0 +1,7 @@
+{
+  "mainExcelFile": "data/main.xlsx",
+  "maximumDateRange": [1, "month"],
+  "xlsxTabPerformers": "performers",
+  "xlsxTabPlaces": "places",
+  "xlsxTabEvents": "Event új"
+}

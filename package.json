@@ -6,8 +6,8 @@
     "helloWorld": "node ./scripts/helloWorld.js",
     "test": "jest ./scripts",
     "test:watch": "jest --watch ./scripts",
-    "test:parseDate": "node ./scripts/utils/date/parseDate.js",
-    "parseXlsx": "node ./scripts/parseXlsx.js"
+    "test:parseDate": "node ./scripts/parser/utils/date/parseDate.js",
+    "parser": "node ./scripts/parser"
   },
   "keywords": [],
   "author": "",

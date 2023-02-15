@@ -1,6 +1,10 @@
-Place exported xlsx into the `data` folder as `main.xlsx`.
-
 A quick intro to node/npm/vscdoe/git (in Hungarian) can be found in the [docs dir](./docs/README.md).
+
+## usage
+
+1. place exported xlsx into the `data` folder as `main.xlsx`.
+2. copy `parserConfig.template.json` to `parserConfig.json` and edit it
+3. run the parser that will convert the xlsx to html
 
 ## scripts
 
