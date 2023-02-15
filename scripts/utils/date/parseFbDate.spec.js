@@ -60,6 +60,10 @@ describe('parseDate', () => {
     val = parseDate('13 JUL AT 12:00 – 16 JUL AT 01:59', '2023-02-13');
     expect(val).toEqual({ startDate: '2023-07-13T12:00', endDate: '2023-07-16T01:59' });
 
+    // short version on the event cards
+    // val = parseDate('FRI, 31 MAR-1 APR', '2023-02-13');
+    // expect(val).toEqual({ startDate: '2023-03-31', endDate: '2023-04-01' });
+
     // random cases from latest raw spreadsheet
     // -----------------------------------------------
 

@@ -107,6 +107,8 @@ client/index.html
 data/*.json
 data/*.xlsx
 output.txt
+output.json
 scraper/config.json
+scraper/output.json
 scraper/session.json
 scraper/session.json.old
