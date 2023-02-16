@@ -1,5 +1,6 @@
 {
   "mainExcelFile": "data/main.xlsx",
+  "templateOutput": "client/index.html",
   "maximumDateRange": [1, "month"],
   "xlsxTabPerformers": "performers",
   "xlsxTabPlaces": "places",
