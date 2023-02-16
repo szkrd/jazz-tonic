@@ -24,6 +24,15 @@ A quick intro to node/npm/vscode/git (in Hungarian) can be found in the [docs di
 
 Serious errors will break the parser and it will bail out with a non zero exit code.
 
+## renderer
+
+- uses **templates/index.hbs** which is a [handlebars](https://handlebarsjs.com/guide/#what-is-handlebars) template
+- run it with `npm run renderer` (or `node scripts/renderer`), for dev/watch mode `npm run renderer:watch`
+- run the dummy client server with `npm run serve` and then open the page in the browser
+- output of the html file is in **client/index.html**
+- a dump of the used template data can be found in the **templateData.dump**, next to the hbs file
+  (which is based on the **main.json** created by the parser)
+
 ### scraper
 
 The scraper is unfinished.
