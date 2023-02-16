@@ -5,14 +5,24 @@ const config = require('../modules/config');
 const xlsJsonToRows = require('../utils/xlsx/xlsJsonToRows');
 const log = require('./log');
 const validateCellKeysOrDie = require('../utils/validation/validateCellKeysOrDie');
+const slugify = require('../utils/string/slugify');
 
 module.exports = function parsePlaces(workSheet) {
   const fileName = path.join(config.dataDir, 'places.json');
   log.info('Parsing places...');
   const rows = xlsJsonToRows(workSheet);
   let invalidAddressCount = 0;
+  const slugNames = [];
+  const slugAddresses = [];
   rows.forEach((row) => {
     validateCellKeysOrDie(row, ['name', 'address', 'fbEventUrl', 'email']);
+
+    // name and address should be primary keys
+    const slugName = slugify(row.name);
+    const slugAddress = slugify(row.address);
+    if (slugNames.includes(slugName) && slugAddresses.includes(slugAddress))
+      log.warning(`Duplicate place? ${row.name} / ${row.address}`);
+
     if (!isValidAddress(row.address)) {
       invalidAddressCount++;
       log.warning(`Invalid street address at row (${row.rowIdx}, ${row.name})`);

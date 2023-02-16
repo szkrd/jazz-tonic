@@ -3,5 +3,9 @@
   "maximumDateRange": [1, "month"],
   "xlsxTabPerformers": "performers",
   "xlsxTabPlaces": "places",
-  "xlsxTabEvents": "Event új"
+  "xlsxTabEvents": "Event új",
+  "extraVenueMatchers": {
+    "riff": ["riff budapest", "riff"],
+    "szimpla": ["szimpla kert", "szimpla"]
+  }
 }
