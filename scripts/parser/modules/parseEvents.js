@@ -1,23 +1,35 @@
 const path = require('path');
 const fs = require('fs');
-const xlsx = require('xlsx');
 const config = require('./config');
 const xlsJsonToRows = require('../utils/xlsx/xlsJsonToRows');
 const splitGenreTags = require('../utils/string/splitGenreTags');
+const log = require('./log');
+const validateCellKeysOrDie = require('../utils/validation/validateCellKeysOrDie');
+const normalizeEventDate = require('../utils/date/normalizeEventDate');
 
 module.exports = function parseEvents(eventsXlsx) {
   const fileName = path.join(config.dataDir, 'events.json');
-  console.info('Parsing events...');
-  const json = xlsx.utils.sheet_to_json(eventsXlsx, { blankrows: false, defval: null });
-  let rows = xlsJsonToRows(json);
+  log.info('Parsing events...');
+  const rows = xlsJsonToRows(eventsXlsx);
   rows.forEach((row) => {
-    if (row.genre) {
-      row.genre = row.genre.toLocaleLowerCase();
-    }
+    validateCellKeysOrDie(row, [
+      'name',
+      'date',
+      'startTime',
+      'endTime',
+      'venue',
+      'ticket',
+      'description',
+      'venueAddress',
+      'performer',
+      'genre',
+      'tags',
+    ]);
+    if (row.date) row.date = normalizeEventDate(row.date);
+    if (row.genre) row.genre = row.genre.toLocaleLowerCase();
     row.tags = splitGenreTags(row.tags);
   });
-  rows = rows.filter((item) => !item.ignore);
   fs.writeFileSync(fileName, JSON.stringify(rows, null, 2), 'utf-8');
-  console.info(`Parsing events done.\nProcessed ${rows.length} rows.`);
+  log.success(`Parsing events done.\nProcessed ${rows.length} rows.`);
   return rows;
 };

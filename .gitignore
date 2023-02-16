@@ -103,6 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
+delme.txt
+temp.txt
 client/index.html
 data/*.json
 data/*.xlsx

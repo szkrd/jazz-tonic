@@ -3,8 +3,10 @@ const config = require('./modules/config');
 const log = require('./modules/log');
 const parsePlaces = require('./modules/parsePlaces');
 const parsePerformers = require('./modules/parsePerformers');
+const mergeParsed = require('./modules/mergeParsed');
+const parseEvents = require('./modules/parseEvents');
 
-const workbook = xlsx.readFile(config.mainExcelFile, { cellHTML: false });
+const workbook = xlsx.readFile(config.mainExcelFile, { cellHTML: false, cellStyles: true });
 const sheetNames = Object.keys(workbook.Sheets);
 
 function precheckSheets() {
@@ -17,8 +19,8 @@ function main() {
   precheckSheets();
   const placesData = parsePlaces(workbook.Sheets[config.xlsxTabPlaces]);
   const performersData = parsePerformers(workbook.Sheets[config.xlsxTabPerformers]);
-  const eventsData = parsePerformers(workbook.Sheets[config.xlsxTabPerformers]);
-  // TODO: parse events, then denormalize all of them into one main.json
+  const eventsData = parseEvents(workbook.Sheets[config.xlsxTabEvents]);
+  mergeParsed(placesData, performersData, eventsData);
 }
 
 main();
