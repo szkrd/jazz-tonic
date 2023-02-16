@@ -7,5 +7,19 @@
   </head>
   <body>
     <p>Number of events: {{events.length}}</p>
+    <table border='1'>
+      <tr>
+        <th>event</th>
+        <th>place</th>
+        <th>at</th>
+      </tr>
+      {{#each events}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td>{{this.place.name}}</td>
+          <td>{{this.startDateTimeFormatted}}</td>
+        </tr>
+      {{/each}}
+    </table>
   </body>
 </html>

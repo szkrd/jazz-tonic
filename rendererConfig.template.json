@@ -1,0 +1,7 @@
+{
+  "templateOutput": "client/index.html",
+  "maximumDateRange": [1, "month"],
+  "useFakeDate": false,
+  "fakeDate": "2023-02-13",
+  "outputDateFormat": "YYYY-MM-DD HH:mm"
+}

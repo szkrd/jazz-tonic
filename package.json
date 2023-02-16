@@ -8,7 +8,9 @@
     "test:watch": "jest --watch ./scripts",
     "test:parseDate": "node ./scripts/parser/utils/date/parseDate.js",
     "parser": "node ./scripts/parser",
-    "renderer": "node ./scripts/renderer"
+    "renderer": "node ./scripts/renderer",
+    "renderer:watch": "nodemon --ext hbs,json,js --watch templates --watch data --watch scripts/renderer ./scripts/renderer",
+    "serve": "serve client"
   },
   "keywords": [],
   "author": "",

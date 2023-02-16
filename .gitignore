@@ -114,4 +114,7 @@ scripts/scraper/config.json
 scripts/scraper/output.json
 scripts/scraper/session.json
 scripts/scraper/session.json.old
-parserConfig.json
+scraperConfig.json
+rendererConfig.json
+rendererConfig.json
+templates/*.dump

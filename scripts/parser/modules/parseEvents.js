@@ -25,6 +25,10 @@ module.exports = function parseEvents(eventsXlsx) {
       'genre',
       'tags',
     ]);
+    if (typeof row.startDate === 'string' && row.startDate && !/^\d{2}:\d{2}$/.test(row.startDate)) {
+      log.error(`Invalid startDate at ${row.rowIdx}, "${row.startDate}"!`);
+      row.startDate = null;
+    }
     if (row.date) row.date = normalizeEventDate(row.date);
     if (row.genre) row.genre = row.genre.toLocaleLowerCase();
     row.tags = splitGenreTags(row.tags);

@@ -10,7 +10,11 @@ try {
   console.info('Could not find "parserConfig.json", using the default values from the template.');
 }
 
-const mainExcelFile = path.join(path.dirname(process.argv[1]).replace(/\\/g, '/'), '../', config.mainExcelFile);
+const mainExcelFile = path.join(
+  path.dirname(process.argv[1].replace(/\\/g, '/').replace(/\/index\.js$/), ''),
+  '../',
+  config.mainExcelFile
+);
 const dataDir = path.dirname(mainExcelFile);
 
 config.dataDir = dataDir;
@@ -19,12 +23,6 @@ config.mainExcelFile = mainExcelFile;
 // validations
 let error = '';
 if (!fs.existsSync(mainExcelFile)) error = "mainExcelFile doesn't exist?";
-if (
-  !Array.isArray(config.maximumDateRange) ||
-  typeof config.maximumDateRange[0] !== 'number' ||
-  config.maximumDateRange.length !== 2
-)
-  error = 'maximumDateRange must be a dayjs diff array value!';
 
 ['xlsxTabPerformers', 'xlsxTabPlaces', 'xlsxTabEvents'].forEach((key) => {
   if (!error && typeof config[key] !== 'string') error = `key "${key}" must be a string!`;
