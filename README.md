@@ -10,7 +10,14 @@ A quick intro to node/npm/vscdoe/git (in Hungarian) can be found in the [docs di
 
 - `npm run helloWorld` = runs the hello world script, to test your node setup
 - `npm run test` = run tests
-- `npm run parseXlsx` = processes **main.xlsx** and outputs json data files (don't forget to place the xlsx into the data dir)
+- `npm run parser` = processes **main.xlsx** and outputs json data files (don't forget to place the xlsx into the data dir)
+
+## data format
+
+1. try to avoid hidden columns, if possible (though the script tries hard to detect them)
+2. do NOT hide rows, row indexing and handling is already complicated enough
+3. preferred date is `YYYY-MM-DD`, or `M/D/YY` (in the events table)
+4. do NOT change the name of existing columns (values in the `A` row)
 
 ## scraper
 
