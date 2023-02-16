@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const config = require('../../../parserConfig.template.json');
+const log = require('./log');
 
 try {
   const localConfig = require('../../../parserConfig.json');
@@ -29,7 +30,7 @@ if (
   if (!error && typeof config[key] !== 'string') error = `key "${key}" must be a string!`;
 });
 
-if (error) throw new Error(`Could not parse the configuration.\n${error}`);
+if (error) log.die(`Could not parse the configuration.\n${error}`);
 
 // export
 module.exports = config;

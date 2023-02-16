@@ -3,10 +3,12 @@ const fs = require('fs');
 const xlsx = require('xlsx');
 const config = require('../modules/config');
 const xlsJsonToRows = require('../utils/xlsx/xlsJsonToRows');
+const splitGenreTags = require('../utils/string/splitGenreTags');
+const log = require('./log');
 
 module.exports = function parsePerformers(performersXlsx) {
   const fileName = path.join(config.dataDir, 'performers.json');
-  console.info('Parsing performers...');
+  log.info('Parsing performers...');
   const json = xlsx.utils.sheet_to_json(performersXlsx, { blankrows: false, defval: null });
   let rows = xlsJsonToRows(json);
   rows.forEach((row) => {
@@ -14,17 +16,13 @@ module.exports = function parsePerformers(performersXlsx) {
     if (row.genre) {
       row.genre = row.genre.toLocaleLowerCase(); // trimming was done in the generic parser
     } else {
-      console.error(`Missing genre at row (${row.rowIdx}, ${row.name})`);
+      log.warning(`Missing genre at row (${row.rowIdx}, ${row.name})`);
     }
     // tag to tags
-    if (row.tags && typeof row.tags === 'string') {
-      row.tags = row.tags.split(',').map((tag) => tag.replace(/\s+/g, ' ').trim().toLocaleLowerCase());
-    } else {
-      row.tags = null;
-    }
+    row.tags = splitGenreTags(row.tags);
   });
   rows = rows.filter((item) => !item.ignore);
   fs.writeFileSync(fileName, JSON.stringify(rows, null, 2), 'utf-8');
-  console.info(`Parsing performers done.\nProcessed ${rows.length} rows.`);
+  log.success(`Parsing performers done.\nProcessed ${rows.length} rows.`);
   return rows;
 };
