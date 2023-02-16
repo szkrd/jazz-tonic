@@ -1,4 +1,4 @@
-A quick intro to node/npm/vscdoe/git (in Hungarian) can be found in the [docs dir](./docs/README.md).
+A quick intro to node/npm/vscode/git (in Hungarian) can be found in the [docs dir](./docs/README.md).
 
 ## usage
 
