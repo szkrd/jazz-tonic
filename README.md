@@ -10,6 +10,8 @@ After opening the project, install the dependencies with `npm i` (from the termi
 - `npm run renderer` = processes **main.json** and outputs html and js files (don't forget to run the parser first)
 - `npm run renderer:watch` = continually runs the renderer listening for changes in the _hbs_ file
 - `npm run serve` = fires up a local server that serves static files from the **/client** directory
+- `npm run lint` = checks the code for common problems
+- `npm run format` = prettifies the code (in case the vscode extension did not work)
 
 ## online spreadsheet
 
