@@ -10,11 +10,6 @@
   <body>
     {{#if hasEvents}}
       <table class='events-table'>
-        <tr>
-          <th>event</th>
-          <th>place</th>
-          <th>at</th>
-        </tr>
         {{#each events}}
           <tr data-event-row-index='{{this.rowIdx}}'>
             <td>{{this.startDateTimeFormatted}}</td>
