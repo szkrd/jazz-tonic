@@ -31,6 +31,9 @@ function processEvents() {
   // add hasEvents to root
   mainJson.hasEvents = mainJson.events.length > 0;
 
+  // add release id for cache busting
+  mainJson.releaseId = Date.now();
+
   mainJson.events.forEach((event) => {
     // add event.active to valid events (ones that are in range)
     let dateTime = event.date;

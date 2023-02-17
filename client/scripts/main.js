@@ -1,6 +1,6 @@
 (() => {
-  const { log, string } = window.pv;
-  const { $, $$, showEl, hideEl } = window.pv.dom;
+  const { log, i18n } = window.pv.utils;
+  const { $, $$, showEl, hideEl } = window.pv.utils.dom;
 
   const events = [];
   const elements = {
@@ -46,7 +46,7 @@
     // search for case and accent insensitive susbtrings
     const matcher = (event, needle) => {
       const loEventName = event.name.toLocaleLowerCase();
-      return loEventName.includes(needle) || string.removeAccents(loEventName).includes(needle);
+      return loEventName.includes(needle) || i18n.removeAccents(loEventName).includes(needle);
     };
 
     // search for text in the list of events, update their dom element's visibility

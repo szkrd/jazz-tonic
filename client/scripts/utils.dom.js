@@ -1,5 +1,6 @@
 window.pv = window.pv || {};
-window.pv.dom = (() => {
+window.pv.utils = window.pv.utils || {};
+window.pv.utils.dom = (() => {
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const $$ = (selector, parent = document) => Array.from(parent.querySelectorAll(selector));
   const showEl = (el) => el.style.removeProperty('display');

@@ -1,5 +1,6 @@
 window.pv = window.pv || {};
-window.pv.string = (() => {
+window.pv.utils = window.pv.utils || {};
+window.pv.utils.i18n = (() => {
   function removeAccents(text) {
     const a = 'ćčñéöúüóøőűáàíïÑÚÜÖØÓŐŰÉÀÁĆČÏÍ'.split('');
     const b = 'ccneouuooouaaiiNUUOOOOUEAACCII'.split('');

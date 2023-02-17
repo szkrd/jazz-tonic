@@ -1,5 +1,6 @@
 window.pv = window.pv || {};
-window.pv.log = (() => {
+window.pv.utils = window.pv.utils || {};
+window.pv.utils.log = (() => {
   const isLocalHost = window.location.hostname === 'localhost';
   const hasForceEnable = window.location.hash.includes('log=1');
   const isEnabled = isLocalHost || hasForceEnable;

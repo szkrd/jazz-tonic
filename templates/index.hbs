@@ -4,11 +4,11 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Pesti Vibe</title>
-    <link rel='stylesheet' href='styles/normalize.css' />
-    <link rel='stylesheet' href='styles/main.css' />
-    <script src='scripts/log.js'></script>
-    <script src='scripts/dom.js'></script>
-    <script src='scripts/string.js'></script>
+    <link rel='stylesheet' href='styles/normalize.css?r={{releaseId}}' />
+    <link rel='stylesheet' href='styles/main.css?r={{releaseId}}' />
+    <script src='scripts/utils.log.js?r={{releaseId}}'></script>
+    <script src='scripts/utils.dom.js?r={{releaseId}}'></script>
+    <script src='scripts/utils.i18n.js?r={{releaseId}}'></script>
   </head>
   <body>
     <input placeholder='kereso' class='js-search-input' style='display:none' />
@@ -46,6 +46,6 @@
     {{else}}
       Nincsenek uj esemenyek.
     {{/if}}
-    <script src='scripts/main.js'></script>
+    <script src='scripts/main.js?r={{releaseId}}'></script>
   </body>
 </html>
