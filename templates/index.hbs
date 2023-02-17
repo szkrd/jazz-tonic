@@ -6,36 +6,45 @@
     <title>Pesti Vibe</title>
     <link rel='stylesheet' href='styles/normalize.css' />
     <link rel='stylesheet' href='styles/main.css' />
+    <script src='scripts/log.js'></script>
+    <script src='scripts/dom.js'></script>
   </head>
   <body>
+    <input placeholder='kereso' class='js-search-input' style='display:none' />
     {{#if hasEvents}}
       <table class='events-table'>
         {{#each events}}
-          <tr data-event-row-index='{{this.rowIdx}}'>
-            <td>{{this.startDateTimeFormatted}}</td>
+          <tr id='event-{{this.rowIdx}}' class='js-event'>
+            <td class='js-event-date' data-date='{{this.startDateTimeNumber}}'>{{this.startDateTimeFormatted}}</td>
             <td>
-              <div class='event-name'>{{this.name}}</div>
+              <div class='event-name js-event-name'>{{this.name}}</div>
               <div class='genres-tags'>
                 {{#if this.genre}}
-                  <strong class='genre js-genre'>
+                  <strong class='genre js-event-genre'>
                     {{this.genre}}
                   </strong>
                 {{/if}}
                 {{#if this.tags}}
                   {{#each this.tags}}
-                    <strong class='tag js-tag'>
+                    <strong class='tag js-event-tag'>
                       {{this}}
                     </strong>
                   {{/each}}
                 {{/if}}
               </div>
             </td>
-            <td><a href='{{this.place.fbEventUrl}}' target='_blank'>{{this.place.name}}</a></td>
+            <td><a
+                href='{{this.place.fbEventUrl}}'
+                target='_blank'
+                id='event-place-{{this.place.rowIdx}}'
+                class='js-event-place-name'
+              >{{this.place.name}}</a></td>
           </tr>
         {{/each}}
       </table>
     {{else}}
       Nincsenek uj esemenyek.
     {{/if}}
+    <script src='scripts/main.js'></script>
   </body>
 </html>
