@@ -4,22 +4,43 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Pesti Vibe</title>
+    <link rel='stylesheet' href='styles/normalize.css' />
+    <link rel='stylesheet' href='styles/main.css' />
   </head>
   <body>
-    <p>Number of events: {{events.length}}</p>
-    <table border='1'>
-      <tr>
-        <th>event</th>
-        <th>place</th>
-        <th>at</th>
-      </tr>
-      {{#each events}}
+    {{#if hasEvents}}
+      <table class='events-table'>
         <tr>
-          <td>{{this.name}}</td>
-          <td>{{this.place.name}}</td>
-          <td>{{this.startDateTimeFormatted}}</td>
+          <th>event</th>
+          <th>place</th>
+          <th>at</th>
         </tr>
-      {{/each}}
-    </table>
+        {{#each events}}
+          <tr data-event-row-index='{{this.rowIdx}}'>
+            <td>{{this.startDateTimeFormatted}}</td>
+            <td>
+              <div class='event-name'>{{this.name}}</div>
+              <div class='genres-tags'>
+                {{#if this.genre}}
+                  <strong class='genre js-genre'>
+                    {{this.genre}}
+                  </strong>
+                {{/if}}
+                {{#if this.tags}}
+                  {{#each this.tags}}
+                    <strong class='tag js-tag'>
+                      {{this}}
+                    </strong>
+                  {{/each}}
+                {{/if}}
+              </div>
+            </td>
+            <td><a href='{{this.place.fbEventUrl}}' target='_blank'>{{this.place.name}}</a></td>
+          </tr>
+        {{/each}}
+      </table>
+    {{else}}
+      Nincsenek uj esemenyek.
+    {{/if}}
   </body>
 </html>

@@ -84,6 +84,9 @@ module.exports = function mergeParsed(placesData, performersData, eventsData) {
     // remove some leftovers
     delete event.venue;
     delete event.venueAddress;
+
+    // do we want to have the tags and genres merged?
+    // probably not, since the table uses vlookup for now
   });
   const user = process.env.USERNAME ?? process.env.USER ?? 'unknown';
   const ret = { events: merged, createdAt: new Date().toISOString(), user };

@@ -5,6 +5,7 @@ const config = require('./modules/config');
 const log = require('../parser/modules/log');
 const dayjs = require('dayjs');
 const chalk = require('chalk');
+const { mkdir } = require('shelljs');
 
 let mainJson = null;
 try {
@@ -20,16 +21,32 @@ const outDir = path.join(rootDir, '/client');
 function processEvents() {
   const baseDate = config.useFakeDate ? config.fakeDate : dayjs().format('YYYY-MM-DD');
   log.info(`Using ${config.useFakeDate ? 'FAKE ' : 'current '}base date "${chalk.greenBright(baseDate)}"`);
+
+  // save per event static js data
+  const dataUri = `/data-${baseDate}`;
+  const currentDataDir = path.join(outDir, dataUri);
+  if (!fs.existsSync(currentDataDir)) mkdir(currentDataDir);
+  mainJson.dataDir = dataUri;
+
+  // add hasEvents to root
+  mainJson.hasEvents = mainJson.events.length > 0;
+
   mainJson.events.forEach((event) => {
     // add event.active to valid events (ones that are in range)
     let dateTime = event.date;
     if (event.startTime) dateTime += 'T' + event.startTime;
     event.active = dayjs(dateTime).isBefore(dayjs(baseDate).add(...config.maximumDateRange));
     event.hidden = !event.active;
+
     // add startDateTime, startDateTimeNumber and formattedDate
     event.startDateTime = dateTime;
     event.startDateTimeNumber = dayjs(dateTime).toDate() * 1;
     event.startDateTimeFormatted = dayjs(dateTime).format(config.outputDateFormat);
+
+    // add relative data location (where the current event's js will be saved)
+    event.dataUri = `${dataUri}/event-${event.rowIdx}.js`.replace(/^\//, '');
+    const eventDataFileName = path.join(currentDataDir, `/event-${event.rowIdx}.js`);
+    fs.promises.writeFile(eventDataFileName, 'window.pv.addEvent(' + JSON.stringify(event) + ')', 'utf-8');
   });
 
   // keep only the active items for the template for now
