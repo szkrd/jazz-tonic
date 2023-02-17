@@ -5,11 +5,12 @@ window.pv.log = (() => {
   const isEnabled = isLocalHost || hasForceEnable;
   const noop = () => {};
 
+  const log = (...args) => console.log('[pv]', ...args);
   const info = (...args) => console.info('[pv]', ...args);
   const warn = (...args) => console.warn('[pv]', ...args);
   const error = (...args) => console.error('[pv]', ...args);
 
-  if (!isEnabled) return { info: noop, warn: noop, error };
+  if (!isEnabled) return { log: noop, info: noop, warn: noop, error };
 
-  return { info, warn, error };
+  return { log, info, warn, error };
 })();

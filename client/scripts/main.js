@@ -1,6 +1,6 @@
 (() => {
   const log = window.pv.log;
-  const { $, $$, show } = window.pv.dom;
+  const { $, $$, show, hide } = window.pv.dom;
 
   const events = [];
   const elements = {
@@ -32,9 +32,24 @@
     log.info('Parsed events:', events);
   }
 
-  function main() {
+  const showEvent = (rowIdx) => show($(`#event-${rowIdx}`));
+  const hideEvent = (rowIdx) => hide($(`#event-${rowIdx}`));
+
+  function manageSearchField() {
     show(elements.searchInput);
+    elements.searchInput.addEventListener('keyup', (event) => {
+      const text = event.target.value.trim();
+      if (!text) return events.forEach((event) => showEvent(event.rowIdx));
+      if (text) events.forEach((event) => hideEvent(event.rowIdx));
+      events
+        .filter((event) => event.name.toLocaleLowerCase().includes(text))
+        .forEach((event) => showEvent(event.rowIdx));
+    });
+  }
+
+  function main() {
     collectEventsFromDom();
+    manageSearchField();
   }
 
   // ---

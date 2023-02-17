@@ -1,5 +1,7 @@
 A quick intro to node/npm/vscode/git (in Hungarian) can be found in the [docs dir](./docs/README.md).
 
+After opening the project, install the dependencies with `npm i` (from the terminal).
+
 ## scripts
 
 - `npm run helloWorld` = runs the hello world script, to test your node setup
