@@ -1,5 +1,5 @@
 const xlsx = require('xlsx');
-const { camelCase, last } = require('lodash');
+const { camelCase } = require('lodash');
 const log = require('../../modules/log');
 
 const STRINGIFY_FIELDS = ['date', 'startTime', 'endTime'];

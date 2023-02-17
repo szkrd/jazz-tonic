@@ -1,20 +1,22 @@
 (() => {
-  const log = window.pv.log;
-  const { $, $$, show, hide } = window.pv.dom;
+  const { log, string } = window.pv;
+  const { $, $$, showEl, hideEl } = window.pv.dom;
 
   const events = [];
   const elements = {
     searchInput: $('.js-search-input'),
   };
 
-  // poor man's jsonp callback
+  // Add global callback for event insertion (using poor man's jsonp callback)
   window.pv.addEvent = (data) => {
     const existingEventIdx = events.findIndex((event) => event.rowIdx === data.rowIdx);
     if (existingEventIdx > -1) events[existingEventIdx] = data;
     else events.push(data);
   };
 
-  // collect events in roughly the same format as the template's dataset uses
+  /**
+   * Collect events in roughly the same format as the template's dataset uses
+   */
   function collectEventsFromDom() {
     $$('.js-event').forEach((el) => {
       const rowIdx = parseInt(el.id.replace(/^event-/, ''), 10);
@@ -32,26 +34,36 @@
     log.info('Parsed events:', events);
   }
 
-  const showEvent = (rowIdx) => show($(`#event-${rowIdx}`));
-  const hideEvent = (rowIdx) => hide($(`#event-${rowIdx}`));
+  const showEvent = (event) => showEl($(`#event-${event.rowIdx}`));
+  const hideEvent = (event) => hideEl($(`#event-${event.rowIdx}`));
 
+  /**
+   * On key up search for substrings in the name content of the events
+   */
   function manageSearchField() {
-    show(elements.searchInput);
-    elements.searchInput.addEventListener('keyup', (event) => {
-      const text = event.target.value.trim();
-      if (!text) return events.forEach((event) => showEvent(event.rowIdx));
-      if (text) events.forEach((event) => hideEvent(event.rowIdx));
-      events
-        .filter((event) => event.name.toLocaleLowerCase().includes(text))
-        .forEach((event) => showEvent(event.rowIdx));
-    });
+    showEl(elements.searchInput);
+
+    // search for case and accent insensitive susbtrings
+    const matcher = (event, needle) => {
+      const loEventName = event.name.toLocaleLowerCase();
+      return loEventName.includes(needle) || string.removeAccents(loEventName).includes(needle);
+    };
+
+    // search for text in the list of events, update their dom element's visibility
+    const searchAndFilter = (text) => {
+      if (!text) return events.forEach(showEvent);
+      if (text) events.forEach(hideEvent);
+      events.filter((event) => matcher(event, text)).forEach(showEvent);
+    };
+
+    elements.searchInput.addEventListener('keyup', (keyEvt) => searchAndFilter(keyEvt.target.value.trim()));
+    searchAndFilter(elements.searchInput.value.trim());
   }
 
-  function main() {
+  // --------------------------------------------------------------------------
+
+  (function main() {
     collectEventsFromDom();
     manageSearchField();
-  }
-
-  // ---
-  main();
+  })();
 })();

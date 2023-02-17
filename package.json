@@ -7,6 +7,7 @@
     "test": "jest ./scripts",
     "test:watch": "jest --watch ./scripts",
     "test:parseDate": "node ./scripts/parser/utils/date/parseDate.js",
+    "lint": "eslint scripts && eslint client/scripts",
     "parser": "node ./scripts/parser",
     "renderer": "node ./scripts/renderer",
     "renderer:watch": "nodemon --ext hbs,json,js --watch templates --watch data --watch scripts/renderer ./scripts/renderer",
