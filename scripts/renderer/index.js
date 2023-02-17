@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const shelljs = require('shelljs');
 let hbs = require('handlebars');
 const config = require('./modules/config');
 const log = require('../parser/modules/log');
@@ -31,8 +32,20 @@ function processEvents() {
   // add hasEvents to root
   mainJson.hasEvents = mainJson.events.length > 0;
 
-  // add release id for cache busting
+  // add release id and file hashes for cache busting
   mainJson.releaseId = Date.now();
+  mainJson.fileHashes = {};
+  const clientJsFiles = Array.from(shelljs.ls(outDir + '/scripts/**/*.js')).concat(
+    shelljs.ls(outDir + '/styles/**/*.css')
+  );
+  clientJsFiles.forEach((fileName) => {
+    const fStats = fs.statSync(fileName);
+    mainJson.fileHashes[fileName.replace(/[/.]/g, '_')] =
+      new Date(fStats.mtime) * 1 - new Date('2023-01-01') * 1 + '-' + fStats.size;
+  });
+
+  // global metadata (already stringified)
+  mainJson.meta = JSON.stringify({ releaseId: mainJson.releaseId });
 
   mainJson.events.forEach((event) => {
     // add event.active to valid events (ones that are in range)

@@ -4,11 +4,12 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Pesti Vibe</title>
-    <link rel='stylesheet' href='styles/normalize.css?r={{releaseId}}' />
-    <link rel='stylesheet' href='styles/main.css?r={{releaseId}}' />
-    <script src='scripts/utils.log.js?r={{releaseId}}'></script>
-    <script src='scripts/utils.dom.js?r={{releaseId}}'></script>
-    <script src='scripts/utils.i18n.js?r={{releaseId}}'></script>
+    <link rel='stylesheet' href='styles/normalize.css?r={{fileHashes.client_styles_normalize_css}}' />
+    <link rel='stylesheet' href='styles/main.css?r={{fileHashes.client_styles_main_css}}' />
+    <script type='text/javascript'>window.pv = { meta: {{{meta}}} }</script>
+    <script src='scripts/utils.log.js?r={{fileHashes.client_scripts_utils_log_js}}'></script>
+    <script src='scripts/utils.dom.js?r={{fileHashes.client_scripts_utils_dom_js}}'></script>
+    <script src='scripts/utils.i18n.js?r={{fileHashes.client_scripts_utils_i18n_js}}'></script>
   </head>
   <body>
     <input placeholder='kereso' class='js-search-input' style='display:none' />
@@ -46,6 +47,6 @@
     {{else}}
       Nincsenek uj esemenyek.
     {{/if}}
-    <script src='scripts/main.js?r={{releaseId}}'></script>
+    <script src='scripts/main.js?r={{fileHashes.client_scripts_main_js}}'></script>
   </body>
 </html>
