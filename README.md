@@ -5,6 +5,9 @@ A quick intro to node/npm/vscode/git (in Hungarian) can be found in the [docs di
 - `npm run helloWorld` = runs the hello world script, to test your node setup
 - `npm run test` = run tests
 - `npm run parser` = processes **main.xlsx** and outputs json data files (don't forget to place the xlsx into the data dir)
+- `npm run renderer` = processes **main.json** and outputs html and js files (don't forget to run the parser first)
+- `npm run renderer:watch` = continually runs the renderer listening for changes in the _hbs_ file
+- `npm run serve` = fires up a local server that serves static files from the **/client** directory
 
 ## online spreadsheet
 
