@@ -5,6 +5,7 @@ let hbs = require('handlebars');
 const config = require('./modules/config');
 const log = require('../parser/modules/log');
 const dayjs = require('dayjs');
+require('dayjs/locale/hu');
 const chalk = require('chalk');
 const { mkdir } = require('shelljs');
 
@@ -57,7 +58,7 @@ function processEvents() {
     // add startDateTime, startDateTimeNumber and formattedDate
     event.startDateTime = dateTime;
     event.startDateTimeNumber = dayjs(dateTime).toDate() * 1;
-    event.startDateTimeFormatted = dayjs(dateTime).format(config.outputDateFormat);
+    event.startDateTimeFormatted = dayjs(dateTime).locale('hu').format(config.outputDateFormat);
 
     // add relative data location (where the current event's js will be saved)
     event.dataUri = `${dataUri}/event-${event.rowIdx}.js`.replace(/^\//, '');

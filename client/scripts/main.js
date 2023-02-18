@@ -69,8 +69,8 @@
       const genre = $('.js-event-genre', el).innerText.trim();
       const tags = $$('.js-event-tag', el).map((tagEl) => tagEl.innerText.trim());
       const place = {
-        name: $('.js-event-place-name').innerText.trim(),
-        rowIdx: parseInt($('.js-event-place-name').id.replace(/^event-place-/, ''), 10),
+        name: $('.js-event-place-name', el).innerText.trim(),
+        rowIdx: parseInt($('.js-event-place-name', el).id.replace(/^event-place-/, ''), 10),
       };
       events.push({ rowIdx, name, startDateTimeNumber, startDateTimeFormatted, genre, tags, place, expired });
     });
@@ -85,19 +85,27 @@
     showEl(elements.searchInput);
 
     // search for case and accent insensitive susbtrings
-    const matcher = (event, needle) => {
+    const matcher = (value, needle) => {
+      if (value === '' || value === undefined) return false;
+      if (Array.isArray(value)) return value.some((singleValue) => matcher(singleValue, needle));
       needle = needle.toLocaleLowerCase();
-      const loEventName = event.name.toLocaleLowerCase();
-      return loEventName.includes(needle) || i18n.removeAccents(loEventName).includes(needle);
+      const loEventValue = value.toLocaleLowerCase();
+      return loEventValue.includes(needle) || i18n.removeAccents(loEventValue).includes(needle);
     };
 
     // search for text in the list of events, update their dom element's visibility
     const searchAndFilter = (text) => {
-      if (!text) return events.filter((event) => !event.expired).forEach(showEvent);
+      if (!text) return events.filter((event) => !event.expired).forEach(showEvent); // arrays are OR based
       if (text) events.forEach(hideEvent);
       events
-        .filter((event) => matcher(event, text))
         .filter((event) => !event.expired)
+        .filter(
+          (event) =>
+            matcher(event.name, text) ||
+            matcher(event.genre, text) ||
+            matcher(event.tags, text) ||
+            matcher(event.place.name, text)
+        )
         .forEach(showEvent);
     };
 
