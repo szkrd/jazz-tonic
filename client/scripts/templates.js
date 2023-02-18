@@ -3,6 +3,7 @@ window.pv.templates = (() => {
   const _ = window._;
   const modal = _.template(`
     <h2><%= name %></h2>
+    <p><%= description %></p>
   `);
   return {
     modal,
