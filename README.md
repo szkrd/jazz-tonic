@@ -31,7 +31,7 @@ After opening the project, install the dependencies with `npm i` (from the termi
 
 Serious errors will break the parser and it will bail out with a non zero exit code.
 
-## renderer
+### renderer
 
 - uses **templates/index.hbs** which is a [handlebars](https://handlebarsjs.com/guide/#what-is-handlebars) template
 - run it with `npm run renderer` (or `node scripts/renderer`), for dev/watch mode `npm run renderer:watch`
@@ -47,3 +47,8 @@ The scraper is unfinished.
 1. to use it first copy the `config.template.json` to `config.json` and set the parameters there
 2. it can log in, manage the session, open the event cards' page and collect the event urls
 3. it is rather brittle and crawling the event pages themselves would pose further problems
+
+### frontend
+
+1. frontend is purely static
+2. old dates are not displayed; for debugging you can use the location search part: `http://localhost:3000/?currentDate=2023-02-15`
