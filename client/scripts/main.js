@@ -35,6 +35,9 @@
     }
   }
 
+  /**
+   * Checks the events array and if an event has expired, marks it and hides it in the dom
+   */
   function hideDatesInThePast() {
     let hiddenEventCount = 0;
     events.forEach((event) => {

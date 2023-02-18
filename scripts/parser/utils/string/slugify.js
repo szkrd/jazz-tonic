@@ -7,7 +7,7 @@ const removeAccents = require('../i18n/removeAccents');
 module.exports = function slugify(text = '') {
   return removeAccents(String(text || ''))
     .toLocaleLowerCase()
-    .replace(/[\s.\-_:,&’'"„”]/g, '')
+    .replace(/[\s.\-_:,&’'"„”/]/g, '')
     .replaceAll('-', '')
     .replaceAll('–', '')
     .replace(/\([^)]*\)/g, '');

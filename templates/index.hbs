@@ -14,38 +14,46 @@
     <script src='scripts/utils.i18n.js?r={{fileHashes.client_scripts_utils_i18n_js}}'></script>
   </head>
   <body>
-    <input placeholder='kereso' class='js-search-input' style='display:none' />
+    <div class='top-controls'>
+      <input placeholder='kereső' class='search-input js-search-input' style='display:none' />
+    </div>
     {{#if hasEvents}}
-      <table class='events-table'>
+      <div class='events-table'>
         {{#each events}}
-          <tr id='event-{{this.rowIdx}}' class='js-event'>
-            <td class='js-event-date' data-date='{{this.startDateTimeNumber}}'>{{this.startDateTimeFormatted}}</td>
-            <td>
-              <div class='event-name js-event-name'>{{this.name}}</div>
-              <div class='genres-tags'>
+          <div id='event-{{this.rowIdx}}' class='events-table-row js-event'>
+            <div class='event-name js-event-name'>{{this.name}}</div>
+            <div class='event-merged-section'>
+              <div class='event-genres-tags event-merge-section-col'>
                 {{#if this.genre}}
-                  <strong class='genre js-event-genre'>
+                  <span
+                    class='genre genre-or-tag js-event-genre'
+                    style='color:{{this.genreColor}};background-color:{{this.genreColorBg}}'
+                  >
                     {{this.genre}}
-                  </strong>
+                  </span>
                 {{/if}}
                 {{#if this.tags}}
                   {{#each this.tags}}
-                    <strong class='tag js-event-tag'>
+                    <span class='tag genre-or-tag js-event-tag'>
                       {{this}}
-                    </strong>
+                    </span>
                   {{/each}}
                 {{/if}}
               </div>
-            </td>
-            <td><a
-                href='{{this.place.fbEventUrl}}'
-                target='_blank'
-                id='event-place-{{this.place.rowIdx}}'
-                class='js-event-place-name'
-              >{{this.place.name}}</a></td>
-          </tr>
+              <div
+                class='event-merge-section-col js-event-date'
+                data-date='{{this.startDateTimeNumber}}'
+              >{{this.startDateTimeFormatted}}</div>
+              <div class='event-place event-merge-section-col'><a
+                  href='{{this.place.fbEventUrl}}'
+                  target='_blank'
+                  id='event-place-{{this.place.rowIdx}}'
+                  class='js-event-place-name'
+                >{{this.place.name}}</a></div>
+            </div>
+          </div>
         {{/each}}
-      </table>
+      </div>
     {{/if}}
     <p class='no-events-message js-no-events-message' style='display:none'>
       Nincsenek új események.
