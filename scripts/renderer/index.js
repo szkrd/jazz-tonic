@@ -61,7 +61,7 @@ function processEvents() {
     event.startDateTimeFormatted = dayjs(dateTime).locale('hu').format(config.outputDateFormat);
 
     // add relative data location (where the current event's js will be saved)
-    event.dataUri = `${dataUri}/event-${event.rowIdx}.js`.replace(/^\//, '');
+    event.dataUri = `${dataUri}/event-${event.rowIdx}.js?r=${mainJson.releaseId}`.replace(/^\//, '');
     const eventDataFileName = path.join(currentDataDir, `/event-${event.rowIdx}.js`);
     fs.promises.writeFile(eventDataFileName, 'window.pv.addEvent(' + JSON.stringify(event) + ')', 'utf-8');
   });

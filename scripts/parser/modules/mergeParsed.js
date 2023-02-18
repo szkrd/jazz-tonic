@@ -12,31 +12,6 @@ const getExtraVenueMatches = (text) => {
   return (match ?? []).map((name) => slugify(name));
 };
 
-const colors = [
-  { name: 'Black', hex: '#000000' },
-  { name: 'Crimson', hex: '#dc143c' },
-  { name: 'DarkBlue', hex: '#00008b' },
-  { name: 'DarkCyan', hex: '#008b8b' },
-  { name: 'DarkGoldenRod', hex: '#b8860b' },
-  { name: 'DarkGreen', hex: '#006400' },
-  { name: 'DarkMagenta', hex: '#8b008b' },
-  { name: 'DarkRed', hex: '#8b0000' },
-  { name: 'DarkSeaGreen', hex: '#8fbc8f' },
-  { name: 'DimGrey', hex: '#696969' },
-  { name: 'ForestGreen', hex: '#228b22' },
-  { name: 'IndianRed', hex: '#cd5c5c' },
-  { name: 'Indigo', hex: '#4b0082' },
-  { name: 'MediumSlateBlue', hex: '#7b68ee' },
-  { name: 'Olive', hex: '#808000' },
-  { name: 'Orange', hex: '#ffa500' },
-  { name: 'PaleVioletRed', hex: '#db7093' },
-  { name: 'RosyBrown', hex: '#bc8f8f' },
-  { name: 'Salmon', hex: '#fa8072' },
-  { name: 'SkyBlue', hex: '#87ceeb' },
-  { name: 'Teal', hex: '#008080' },
-  { name: 'YellowGreen', hex: '#9acd32' },
-];
-
 module.exports = function mergeParsed(placesData, performersData, eventsData) {
   const fileName = path.join(config.dataDir, 'main.json');
   console.info('Merging places + performers + events...');
@@ -121,10 +96,13 @@ module.exports = function mergeParsed(placesData, performersData, eventsData) {
 
   // add genreIds and colors
   genreIds = uniq(genreIds).sort();
+  const colors = config.tagColors;
   merged.forEach((event) => {
     event.genreId = genreIds.indexOf(slugify(event.genre));
-    event.genreColor = colors[event.genreId % colors.length].hex;
-    event.genreColorBg = colors[event.genreId % colors.length].hex + '50';
+    const fg = colors[event.genreId % colors.length].fg;
+    const bg = colors[event.genreId % colors.length].bg || fg + '50'; // fallback with alpha
+    event.genreColor = fg;
+    event.genreColorBg = bg;
   });
   if (colors.length < genreIds.length) log.info(`We have ${genreIds.length} genres, but only ${colors.length} colors.`);
 

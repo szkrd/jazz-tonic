@@ -5,13 +5,18 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Pesti Vibe</title>
     <link rel='stylesheet' href='styles/normalize.css?r={{fileHashes.client_styles_normalize_css}}' />
+    <link rel='stylesheet' href='styles/loader.css?r={{fileHashes.client_styles_loader_css}}' />
     <link rel='stylesheet' href='styles/main.css?r={{fileHashes.client_styles_main_css}}' />
+    <link rel='stylesheet' href='styles/modal.css?r={{fileHashes.client_styles_modal_css}}' />
     <script type='text/javascript'>window.pv = { meta: {{{meta}}} }</script>
+    <script src='scripts/vendor/lodash.min.js?r={{fileHashes.client_scripts_lodash_dayjs_min_js}}'></script>
     <script src='scripts/vendor/dayjs.min.js?r={{fileHashes.client_scripts_vendor_dayjs_min_js}}'></script>
     <script src='scripts/utils.log.js?r={{fileHashes.client_scripts_utils_log_js}}'></script>
     <script src='scripts/utils.url.js?r={{fileHashes.client_scripts_utils_url_js}}'></script>
     <script src='scripts/utils.dom.js?r={{fileHashes.client_scripts_utils_dom_js}}'></script>
     <script src='scripts/utils.i18n.js?r={{fileHashes.client_scripts_utils_i18n_js}}'></script>
+    <script src='scripts/utils.resource.js?r={{fileHashes.client_scripts_utils_resource_js}}'></script>
+    <script src='scripts/templates.js?r={{fileHashes.client_scripts_templates_js}}'></script>
   </head>
   <body>
     <div class='top-controls'>
@@ -20,8 +25,11 @@
     {{#if hasEvents}}
       <div class='events-table'>
         {{#each events}}
-          <div id='event-{{this.rowIdx}}' class='events-table-row js-event'>
-            <div class='event-name js-event-name'>{{this.name}}</div>
+          <div id='event-{{this.rowIdx}}' class='events-table-row js-event js-clickable-row'>
+            <a href='./{{this.dataUri}}' class='js-event-name js-event-details-opener hidden'>{{this.name}}</a>
+            <div class='event-name'>
+              <span>{{this.name}}</span>
+            </div>
             <div class='event-merged-section'>
               <div class='event-genres-tags event-merge-section-col'>
                 {{#if this.genre}}
@@ -44,12 +52,12 @@
                 class='event-merge-section-col js-event-date'
                 data-date='{{this.startDateTimeNumber}}'
               >{{this.startDateTimeFormatted}}</div>
-              <div class='event-place event-merge-section-col'><a
+              <div class='event-place event-merge-section-col'><span
                   href='{{this.place.fbEventUrl}}'
                   target='_blank'
                   id='event-place-{{this.place.rowIdx}}'
                   class='js-event-place-name'
-                >{{this.place.name}}</a></div>
+                >{{this.place.name}}</span></div>
             </div>
           </div>
         {{/each}}
@@ -58,6 +66,35 @@
     <p class='no-events-message js-no-events-message' style='display:none'>
       Nincsenek új események.
     </p>
+    <div class='js-modal modal'>
+      <div class='modal-cover-layer'></div>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <button class='modal-close js-modal-close'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              class='icon-feather-x-circle'
+            ><circle cx='12' cy='12' r='10'></circle><line x1='15' y1='9' x2='9' y2='15'></line><line
+                x1='9'
+                y1='9'
+                x2='15'
+                y2='15'
+              ></line></svg>
+          </button>
+        </div>
+        <div class='modal-inner-content js-modal-content'>
+          {{! content }}
+        </div>
+      </div>
+    </div>
     <script src='scripts/main.js?r={{fileHashes.client_scripts_main_js}}'></script>
   </body>
 </html>
