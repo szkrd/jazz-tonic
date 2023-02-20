@@ -20,6 +20,16 @@ const rootDir = '.'; // use process argv 1?
 const templatesDir = path.join(rootDir, '/templates');
 const outDir = path.join(rootDir, '/client');
 
+hbs.registerHelper('templatize', (options) => {
+  let text = fs.readFileSync(path.join(templatesDir, options.hash.file + '.tpl'), 'utf-8');
+  text = text.replace(/<!--.*?-->/g, '');
+  return [
+    '<script type="text/javascript">',
+    'window.pv.templates.modal=_.template(' + JSON.stringify(text) + ');',
+    '</script>',
+  ].join('');
+});
+
 function processEvents() {
   const baseDate = config.useFakeDate ? config.fakeDate : dayjs().format('YYYY-MM-DD');
   log.info(`Using ${config.useFakeDate ? 'FAKE ' : 'current '}base date "${chalk.greenBright(baseDate)}"`);

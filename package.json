@@ -11,7 +11,7 @@
     "format": "prettier -w scripts client/scripts client/styles templates",
     "parser": "node ./scripts/parser",
     "renderer": "node ./scripts/renderer",
-    "renderer:watch": "nodemon --ext hbs,json,js --watch templates --watch data --watch scripts/renderer ./scripts/renderer",
+    "renderer:watch": "nodemon --ext hbs,tpl,json,js --watch templates --watch data --watch scripts/renderer ./scripts/renderer",
     "serve": "serve client"
   },
   "keywords": [],

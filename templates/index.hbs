@@ -8,15 +8,14 @@
     <link rel='stylesheet' href='styles/loader.css?r={{fileHashes.client_styles_loader_css}}' />
     <link rel='stylesheet' href='styles/main.css?r={{fileHashes.client_styles_main_css}}' />
     <link rel='stylesheet' href='styles/modal.css?r={{fileHashes.client_styles_modal_css}}' />
-    <script type='text/javascript'>window.pv = { meta: {{{meta}}} }</script>
-    <script src='scripts/vendor/lodash.min.js?r={{fileHashes.client_scripts_lodash_dayjs_min_js}}'></script>
-    <script src='scripts/vendor/dayjs.min.js?r={{fileHashes.client_scripts_vendor_dayjs_min_js}}'></script>
+    <script type='text/javascript'>window.pv = { meta: {{{meta}}}, templates: {} }</script>
+    <script src='scripts/vendor/lodash.4.17.21.min.js'></script>
+    <script src='scripts/vendor/dayjs.1.11.7.min.js'></script>
     <script src='scripts/utils.log.js?r={{fileHashes.client_scripts_utils_log_js}}'></script>
     <script src='scripts/utils.url.js?r={{fileHashes.client_scripts_utils_url_js}}'></script>
     <script src='scripts/utils.dom.js?r={{fileHashes.client_scripts_utils_dom_js}}'></script>
     <script src='scripts/utils.i18n.js?r={{fileHashes.client_scripts_utils_i18n_js}}'></script>
     <script src='scripts/utils.resource.js?r={{fileHashes.client_scripts_utils_resource_js}}'></script>
-    <script src='scripts/templates.js?r={{fileHashes.client_scripts_templates_js}}'></script>
   </head>
   <body>
     <div class='top-controls'>
@@ -96,5 +95,6 @@
       </div>
     </div>
     <script src='scripts/main.js?r={{fileHashes.client_scripts_main_js}}'></script>
+    {{{templatize file='modal'}}}
   </body>
 </html>
