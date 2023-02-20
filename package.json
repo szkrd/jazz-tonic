@@ -1,6 +1,6 @@
 {
   "name": "jazz-tonic",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "WIP",
   "scripts": {
     "helloWorld": "node ./scripts/helloWorld.js",
