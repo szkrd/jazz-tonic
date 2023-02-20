@@ -14,9 +14,11 @@
   cursor: pointer;
 }
 
+.events-table-row:focus,
 .events-table-row:hover {
   border-color: var(--color-events-row-border-hover);
   box-shadow: 0 0 30px inset var(--color-events-row-hover-inset-shadow);
+  outline: 0;
 }
 
 .events-table-row .event-merged-section {

@@ -38,7 +38,7 @@
     {{#if hasEvents}}
       <div class='events-table'>
         {{#each events}}
-          <div id='event-{{this.rowIdx}}' class='events-table-row js-event js-clickable-row'>
+          <div id='event-{{this.rowIdx}}' class='events-table-row js-event js-clickable-row' tabindex='0'>
             <a href='./{{this.dataUri}}' class='js-event-name js-event-details-opener hidden'>{{this.name}}</a>
             <div class='event-name'>
               <span>{{this.name}}</span>

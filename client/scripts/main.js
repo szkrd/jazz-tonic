@@ -116,9 +116,11 @@
       const matchEvent = matcherAll(text);
       const notExpiredEvents = events.filter((event) => !event.expired);
       let results = [];
-      // comma triggers the AND operator (so "vocal jazz, modern jazz" means two searches internally)
-      if (text.includes(',')) {
-        const parts = text.split(',').map((part) => part.trim());
+      const andOperator = ' '; // by default I usually use a comma, but the "real" user may not think like that...
+
+      // triggers the AND operator (so "vocal jazz, modern jazz" means two searches internally)
+      if (text.includes(andOperator)) {
+        const parts = text.split(andOperator).map((part) => part.trim());
         const numberOfParts = parts.length;
         const foundEvents = []; // good matches will appear N times (N = number of text parts)
         parts.forEach((part) => {
@@ -129,9 +131,13 @@
         [...new Set(foundEvents)].forEach((event) => {
           if (foundEvents.filter((item) => item === event).length === numberOfParts) results.push(event);
         });
-      } else {
-        results = notExpiredEvents.filter(matchEvent);
-      }
+      } // else results = notExpiredEvents.filter(matchEvent); ...
+
+      // these are the exact matchers (like "bar baz" matches "foo bar baz qux", while "baz bar" won't)
+      // if we have exact matches, then let's prefer those, if not, then swith to the fuzzy
+      let strictResults = notExpiredEvents.filter(matchEvent);
+      if (strictResults.length > 0) results = strictResults;
+
       results.forEach(showEvent);
     };
 
@@ -154,9 +160,13 @@
   function addEventDownloadHandlers() {
     $$('.js-event-details-opener').forEach((el) => {
       const eventContainer = el.closest('.js-clickable-row');
+      eventContainer.addEventListener('keyup', (keyEvt) => {
+        if (keyEvt.key === 'Enter') eventContainer.click();
+      });
       eventContainer.addEventListener('click', (clickEvt) => {
         clickEvt.preventDefault();
         clickEvt.stopPropagation();
+        document.activeElement.blur();
         const eventId = parseInt(clickEvt.currentTarget.getAttribute('id').replace(/^event-/, ''), 10);
         const el = $('.js-event-details-opener', clickEvt.currentTarget);
         const href = el.getAttribute('href');
