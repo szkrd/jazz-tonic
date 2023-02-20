@@ -185,12 +185,12 @@
   function manageThemeSwitcher() {
     const isDark = storage.load('darkTheme') === 1;
     elements.themeButtons[isDark ? 'dark' : 'light'].classList.add('selected');
-    if (isDark) document.body.classList.add('theme-dark');
+    if (isDark) document.body.parentNode.classList.add('theme-dark');
     const setDarkMode = (el, flag) => {
       $$('button', el.parentNode).forEach((el) => el.classList.remove('selected'));
       el.classList.add('selected');
       storage.save('darkTheme', flag * 1);
-      document.body.classList[flag ? 'add' : 'remove']('theme-dark');
+      document.body.parentNode.classList[flag ? 'add' : 'remove']('theme-dark');
     };
     elements.themeButtons.dark.addEventListener('click', (clickEvt) => setDarkMode(clickEvt.currentTarget, true));
     elements.themeButtons.light.addEventListener('click', (clickEvt) => setDarkMode(clickEvt.currentTarget, false));

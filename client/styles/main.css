@@ -1,13 +1,23 @@
 body {
   font-size: 16px;
-  background-color: #f5f5f5;
+  background-color: var(--color-body-bg);
 }
 
 body,
 td,
 input,
 button {
-  color: #4d4d4d;
+  color: var(--color-text);
+}
+
+a,
+a:hover,
+a:active {
+  color: var(--color-link);
+}
+
+a:visited {
+  color: var(--color-link-visited);
 }
 
 a:hover {
@@ -15,27 +25,28 @@ a:hover {
 }
 
 button {
-  border: 1px solid #dfdfdf;
+  border: 1px solid var(--color-button-border);
   background-color: transparent;
   border-radius: 3px;
 }
 
 button:focus {
   outline: 0;
-  border-color: #4d4d4d;
+  border-color: var(--color-button-focused-border);
 }
 
 input[type='text'],
 input[type='search'] {
   border-radius: 3px;
-  border: 1px solid #dfdfdf;
+  border: 1px solid var(--color-text-input-border);
   padding: 3px 5px;
+  background-color: var(--color-text-input-bg);
 }
 
 input[type='text']:focus,
 input[type='search']:focus {
   outline: 0;
-  border-color: #4d4d4d;
+  border-color: var(--color-text-input-focused-border);
   text-decoration: none;
 }
 
@@ -51,21 +62,21 @@ body.show-modal {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #e0e0e0 #f5f5f5;
+  scrollbar-color: var(--color-scrollbar-fgcolor) var(--color-scrollbar-bg);
 }
 
 *::-webkit-scrollbar {
-  width: 16px;
+  width: 12px;
 }
 
 *::-webkit-scrollbar-track {
-  background: #f5f5f5;
+  background: var(--color-scrollbar-track);
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #e0e0e0;
+  background-color: var(--color-scrollbar-thumb-bg);
   border-radius: 10px;
-  border: 3px solid #f5f5f5;
+  border: 2px solid var(--color-scrollbar-thumb-border);
 }
 
 /* MESSAGES */
@@ -103,17 +114,18 @@ body.show-modal {
 }
 
 .theme-switcher button.selected {
-  box-shadow: 0 0 5px inset #4d4d4d;
+  box-shadow: 0 0 5px inset var(--color-button-selected-shadow);
 }
 
 .theme-switcher button:first-child {
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
+  border-right: 0;
   display: block;
 }
 
 .theme-switcher button:last-child {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
-  margin-left: -1px;
+  border-left: 0;
 }

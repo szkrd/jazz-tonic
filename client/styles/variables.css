@@ -1,0 +1,63 @@
+:root {
+  --color-body-bg: #f5f5f5;
+  --color-text: #4d4d4d;
+  --color-link: #0066cc;
+  --color-link-visited: #758a9e;
+  --color-button-border: #dfdfdf;
+  --color-button-focused-border: #4d4d4d;
+  --color-button-selected-shadow: #4d4d4d;
+  --color-text-input-border: #dfdfdf;
+  --color-text-input-focused-border: #4d4d4d;
+  --color-text-input-bg: #f5f5f5;
+  --color-scrollbar-fg: #e0e0e0;
+  --color-scrollbar-bg: #f5f5f5;
+  --color-scrollbar-track-: #f5f5f5;
+  --color-scrollbar-thumb-bg: #e0e0e0;
+  --color-scrollbar-thumb-border: #f5f5f5;
+  --color-loader: #aaaaaa;
+  --color-loader-bg: #f5f5f5;
+  --color-events-row-border: #dfdfdf;
+  --color-events-row-border-hover: #0060df;
+  --color-events-row-bg: transparent;
+  --color-events-row-hover-inset-shadow: #0060df10;
+  --color-events-event-name-link: #4d4d4d;
+  --color-events-event-tag-bg: #dddddd;
+  --color-modal-cover: #30303050;
+  --color-modal-close-icon: #bbbbbb;
+  --color-modal-close-icon-hover: #aaaaaa;
+  --color-modal-content-bg: #f5f5f5;
+  --color-modal-content-shadow: #30303070;
+  --color-modal-label: #888888;
+}
+
+html.theme-dark:root {
+  --color-body-bg: #333;
+  --color-text: #e0e0e0;
+  --color-link: #51a3f4;
+  --color-link-visited: #758a9e;
+  --color-button-border: #888888;
+  --color-button-focused-border: #e0e0e0;
+  --color-button-selected-shadow: #e0e0e0;
+  --color-text-input-border: #888888;
+  --color-text-input-focused-border: #e0e0e0;
+  --color-text-input-bg: #111;
+  --color-scrollbar-fg: #a5a5a5;
+  --color-scrollbar-bg: #333;
+  --color-scrollbar-track-: #333;
+  --color-scrollbar-thumb-bg: #888;
+  --color-scrollbar-thumb-border: #333;
+  --color-loader: #777;
+  --color-loader-bg: #333;
+  --color-events-row-border: #666;
+  --color-events-row-border-hover: #999;
+  --color-events-row-bg: #282828;
+  --color-events-row-hover-inset-shadow: #ffffff20;
+  --color-events-event-name-link: #e0e0e0;
+  --color-events-event-tag-bg: #444;
+  --color-modal-cover: #00000090;
+  --color-modal-close-icon: #888888;
+  --color-modal-close-icon-hover: #aaaaaa;
+  --color-modal-content-bg: #333;
+  --color-modal-content-shadow: #000000;
+  --color-modal-label: #888888;
+}

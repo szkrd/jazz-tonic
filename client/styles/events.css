@@ -6,7 +6,8 @@
 }
 
 .events-table-row {
-  border: 1px solid #dfdfdf;
+  border: 1px solid var(--color-events-row-border);
+  background-color: var(--color-events-row-bg);
   margin: 0 0 6px;
   border-radius: 3px;
   padding: 8px 5px;
@@ -14,8 +15,8 @@
 }
 
 .events-table-row:hover {
-  border-color: #0060df;
-  box-shadow: 0 0 30px inset #0060df10;
+  border-color: var(--color-events-row-border-hover);
+  box-shadow: 0 0 30px inset var(--color-events-row-hover-inset-shadow);
 }
 
 .events-table-row .event-merged-section {
@@ -24,7 +25,7 @@
 }
 
 .events-table-row .event-name-link {
-  color: #4d4d4d;
+  color: var(--color-events-event-name-link);
 }
 
 .events-table-row .event-merged-section > .event-merge-section-col:not(:first-of-type) {
@@ -44,5 +45,11 @@
 }
 
 .genre-or-tag.tag {
-  background-color: #ddd;
+  background-color: var(--color-events-event-tag-bg);
+}
+
+/* DARK THEME OVERRIDE */
+
+html.theme-dark .genre-or-tag.genre {
+  filter: invert(1);
 }
