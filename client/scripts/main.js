@@ -146,7 +146,8 @@
    */
   function addEventDownloadHandlers() {
     $$('.js-event-details-opener').forEach((el) => {
-      el.closest('.js-clickable-row').addEventListener('click', (clickEvt) => {
+      const eventContainer = el.closest('.js-clickable-row');
+      eventContainer.addEventListener('click', (clickEvt) => {
         clickEvt.preventDefault();
         clickEvt.stopPropagation();
         const eventId = parseInt(clickEvt.currentTarget.getAttribute('id').replace(/^event-/, ''), 10);
@@ -159,9 +160,11 @@
             log.info(`Downloaded script resource "${href}"`);
             const event = events.find((item) => item.rowIdx === eventId);
             elements.modalContent.innerHTML = templates.modal(event);
+            const formattedTagsClone = $('.js-event-genres-tags-merged', eventContainer).cloneNode(true);
+            $('.js-tags-copy-target').appendChild(formattedTagsClone);
           })
-          .catch(() => {
-            log.error(`Download failed for js resource url "${href}"!`);
+          .catch((err) => {
+            log.error(`Download failed for js resource url "${href}"!`, err);
             elements.modalContent.innerHTML = '<p class="error-message>Hiba történt az esemény betöltésekor!</p>';
           });
       });

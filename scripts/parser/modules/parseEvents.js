@@ -31,6 +31,20 @@ module.exports = function parseEvents(eventsXlsx) {
     }
     if (row.date) row.date = normalizeEventDate(row.date);
     if (row.genre) row.genre = row.genre.toLocaleLowerCase();
+    // create a ticketUrl for ticket
+    if (typeof row.ticket === 'string' && row.ticket && row.ticket.includes('/')) {
+      if (row.ticket.startsWith('http')) {
+        row.ticketUrl = row.ticket;
+      } else {
+        row.ticket = row.ticket.replace(/^https?\/\//, '');
+        row.ticketUrl = `https://${row.ticket}`;
+      }
+    }
+    // clean up description a bit
+    if (typeof row.description === 'string' && row.description) {
+      row.description = row.description.replace(/\s?see less/gi, '');
+    }
+    // collect tags into an array proper
     row.tags = splitGenreTags(row.tags);
   });
   fs.writeFileSync(fileName, JSON.stringify(rows, null, 2), 'utf-8');
