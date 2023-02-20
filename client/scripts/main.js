@@ -165,7 +165,8 @@
           })
           .catch((err) => {
             log.error(`Download failed for js resource url "${href}"!`, err);
-            elements.modalContent.innerHTML = '<p class="error-message>Hiba történt az esemény betöltésekor!</p>';
+            elements.modalContent.innerHTML =
+              '<p class="modal-error-message">Hiba történt az esemény betöltésekor!</p>';
           });
       });
     });
