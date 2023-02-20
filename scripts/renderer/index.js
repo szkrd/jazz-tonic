@@ -30,6 +30,15 @@ hbs.registerHelper('templatize', (options) => {
   ].join('');
 });
 
+const __includeMap = {};
+hbs.registerHelper('require', (options) => {
+  const fn = options.hash.file;
+  if (__includeMap[fn]) return __includeMap[fn];
+  let text = fs.readFileSync(path.join(templatesDir, fn), 'utf-8');
+  __includeMap[fn] = text;
+  return text;
+});
+
 function processEvents() {
   const baseDate = config.useFakeDate ? config.fakeDate : dayjs().format('YYYY-MM-DD');
   log.info(`Using ${config.useFakeDate ? 'FAKE ' : 'current '}base date "${chalk.greenBright(baseDate)}"`);

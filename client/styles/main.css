@@ -5,11 +5,37 @@ body {
 
 body,
 td,
-input {
+input,
+button {
   color: #4d4d4d;
 }
 
 a:hover {
+  text-decoration: none;
+}
+
+button {
+  border: 1px solid #dfdfdf;
+  background-color: transparent;
+  border-radius: 3px;
+}
+
+button:focus {
+  outline: 0;
+  border-color: #4d4d4d;
+}
+
+input[type='text'],
+input[type='search'] {
+  border-radius: 3px;
+  border: 1px solid #dfdfdf;
+  padding: 3px 5px;
+}
+
+input[type='text']:focus,
+input[type='search']:focus {
+  outline: 0;
+  border-color: #4d4d4d;
   text-decoration: none;
 }
 
@@ -52,18 +78,42 @@ body.show-modal {
 /* TOPMOST CONTROLS */
 
 .top-controls {
+  max-width: 1200px;
   margin: 5px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .top-controls .search-input {
   border-radius: 3px;
-  border: 1px solid #dfdfdf;
-  padding: 3px 5px;
   width: 300px;
 }
 
-.top-controls .search-input:focus {
-  outline: 0;
-  border-color: #4d4d4d;
-  text-decoration: none;
+.theme-switcher {
+  display: flex;
+}
+
+.theme-switcher button {
+  display: block;
+  border-radius: 0;
+}
+
+.theme-switcher button svg {
+  scale: 0.8;
+}
+
+.theme-switcher button.selected {
+  box-shadow: 0 0 5px inset #4d4d4d;
+}
+
+.theme-switcher button:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  display: block;
+}
+
+.theme-switcher button:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  margin-left: -1px;
 }

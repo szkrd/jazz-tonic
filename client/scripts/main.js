@@ -2,7 +2,7 @@
   // eslint-disable-next-line no-undef
   const dayjs = window.dayjs;
   const { templates } = window.pv;
-  const { log, i18n, url, resource } = window.pv.utils;
+  const { log, i18n, url, resource, storage } = window.pv.utils;
   const { $, $$, showEl, hideEl } = window.pv.utils.dom;
 
   const events = [];
@@ -11,6 +11,7 @@
     searchInput: $('.js-search-input'),
     noEventsMessage: $('.js-no-events-message'),
     modalContent: $('.js-modal-content'),
+    themeButtons: { light: $('.js-theme-button-light'), dark: $('.js-theme-button-dark') },
   };
 
   // Add global callback for event insertion (using poor man's jsonp callback)
@@ -109,6 +110,7 @@
 
     // search for text in the list of events, update their dom element's visibility
     const searchAndFilter = (text) => {
+      storage.save('searchTerm', text);
       if (!text) return events.filter((event) => !event.expired).forEach(showEvent); // arrays are OR based
       if (text) events.forEach(hideEvent);
       const matchEvent = matcherAll(text);
@@ -133,12 +135,17 @@
       results.forEach(showEvent);
     };
 
+    elements.searchInput.value = storage.load('searchTerm');
     elements.searchInput.addEventListener('keyup', (keyEvt) => searchAndFilter(keyEvt.target.value.trim()));
+    elements.searchInput.addEventListener('focus', (keyEvt) => keyEvt.target.select());
     searchAndFilter(elements.searchInput.value.trim());
   }
 
   function addModalCloseEventHandler() {
     $('.js-modal-close').addEventListener('click', hideModal);
+    document.addEventListener('keyup', (keyEvt) => {
+      if (keyEvt.key === 'Escape') hideModal();
+    });
   }
 
   /**
@@ -172,6 +179,23 @@
     });
   }
 
+  /**
+   * Handle theme switching using body class
+   */
+  function manageThemeSwitcher() {
+    const isDark = storage.load('darkTheme') === 1;
+    elements.themeButtons[isDark ? 'dark' : 'light'].classList.add('selected');
+    if (isDark) document.body.classList.add('theme-dark');
+    const setDarkMode = (el, flag) => {
+      $$('button', el.parentNode).forEach((el) => el.classList.remove('selected'));
+      el.classList.add('selected');
+      storage.save('darkTheme', flag * 1);
+      document.body.classList[flag ? 'add' : 'remove']('theme-dark');
+    };
+    elements.themeButtons.dark.addEventListener('click', (clickEvt) => setDarkMode(clickEvt.currentTarget, true));
+    elements.themeButtons.light.addEventListener('click', (clickEvt) => setDarkMode(clickEvt.currentTarget, false));
+  }
+
   // --------------------------------------------------------------------------
 
   (function main() {
@@ -180,6 +204,7 @@
     hideDatesInThePast();
     setInterval(hideDatesInThePast, 1000 * 60 * 60 * 12); //check every 12 hours for old events
     manageSearchField();
+    manageThemeSwitcher();
     addEventDownloadHandlers();
     addModalCloseEventHandler();
   })();
