@@ -99,7 +99,9 @@ function renderTemplates() {
     fs.promises.readFile(path.join(templatesDir, fileName), 'utf-8').then((text) => {
       const template = text;
       const compile = hbs.compile(template);
-      const compiled = compile(mainJson);
+      let compiled = compile(mainJson);
+      const docType = '<!DOCTYPE html>'; // someone ate our doctype
+      if (!compiled.startsWith(docType)) compiled = `${docType}\n${compiled}`;
       fs.promises.writeFile(path.join(templatesDir, '/templateData.dump'), JSON.stringify(mainJson, null, 2));
       fs.promises.writeFile(path.join(outDir, '/' + fileName.replace(/\.hbs$/, '.html')), compiled);
       log.info(`Compiled and saved ${fileName}`);
