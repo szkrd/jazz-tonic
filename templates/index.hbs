@@ -29,14 +29,19 @@
   <body>
     <div class='page-content'>
       <div class='top-controls'>
-        <div class='flex-child'>
-          <input placeholder='kereső' type='text' class='search-input js-search-input' style='display:none' />
-        </div>
-        <div class='flex-child'>
-          <div class='theme-switcher'>
-            <button class='js-theme-button-light'>{{{require file='images/sun.svg'}}}</button>
-            <button class='js-theme-button-dark'>{{{require file='images/moon.svg'}}}</button>
+        <div class='top-controls-flex-row'>
+          <div class='flex-child'>
+            <input placeholder='kereső' type='text' class='search-input js-search-input' style='display:none' />
           </div>
+          <div class='flex-child'>
+            <div class='theme-switcher'>
+              <button class='js-theme-button-light'>{{{require file='images/sun.svg'}}}</button>
+              <button class='js-theme-button-dark'>{{{require file='images/moon.svg'}}}</button>
+            </div>
+          </div>
+        </div>
+        <div class='top-controls-row'>
+          <div class='js-clickable-tag-filter tag-filter'></div>
         </div>
       </div>
       {{#if hasEvents}}
@@ -52,6 +57,7 @@
                   {{#if this.genre}}
                     <span
                       class='genre genre-or-tag js-event-genre'
+                      data-value='{{this.genre}}'
                       style='color:{{this.genreColor}};background-color:{{this.genreColorBg}}'
                     >
                       {{this.genre}}
@@ -59,7 +65,7 @@
                   {{/if}}
                   {{#if this.tags}}
                     {{#each this.tags}}
-                      <span class='tag genre-or-tag js-event-tag'>
+                      <span class='tag genre-or-tag js-event-tag' data-value='{{this}}'>
                         {{this}}
                       </span>
                     {{/each}}

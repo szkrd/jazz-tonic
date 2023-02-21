@@ -2,8 +2,12 @@
 
 .top-controls {
   margin: 5px 5px 20px 5px;
+}
+
+.top-controls-flex-row {
   display: flex;
   justify-content: space-between;
+  margin: 0 0 5px;
 }
 
 .top-controls .search-input {
@@ -18,6 +22,8 @@
     width: calc(100vw - 89px);
   }
 }
+
+/* THEME SWITCHER */
 
 .theme-switcher {
   display: flex;
@@ -49,4 +55,18 @@
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   border-left: 0;
+}
+
+/* TAG FILTER */
+.top-controls .tag-filter span.genre {
+  cursor: pointer;
+  margin: 0 2px 2px;
+  background-color: transparent;
+  border: 1px solid var(--color-tag-filter-border);
+  color: var(--color-tag-filter-text);
+}
+
+.top-controls .tag-filter span.genre:hover {
+  border-color: var(--color-tag-filter-border-hover);
+  color: var(--color-tag-filter-text-hover);
 }

@@ -28,6 +28,11 @@
   --color-modal-content-bg: #f5f5f5;
   --color-modal-content-shadow: #30303070;
   --color-modal-label: #888888;
+
+  --color-tag-filter-border: transparent;
+  --color-tag-filter-text: #4d4d4d;
+  --color-tag-filter-border-hover: #333;
+  --color-tag-filter-text-hover: #333;
 }
 
 html.theme-dark:root {

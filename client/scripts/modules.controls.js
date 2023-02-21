@@ -95,9 +95,39 @@ window.pv.modules.controls = (() => {
     themeButtons.light.addEventListener('click', (clickEvt) => setDarkMode(clickEvt.currentTarget, false));
   }
 
+  function setupTagSelector() {
+    const STRIP_COLOR = true;
+    const target = $('.js-clickable-tag-filter');
+    const collectedValues = [];
+    const collectedTags = [];
+    $$('.genre.genre-or-tag').forEach((node) => {
+      // const row = node.closest('.js-event');
+      // TODO: filter for expired in the real events list!
+      // if (row.style.display === 'none') return; // hidden by date range OR filter, damn
+      const value = node.dataset.value;
+      if (collectedValues.includes(value)) return;
+      collectedValues.push(value);
+      const clone = node.cloneNode(true);
+      if (STRIP_COLOR) clone.style = '';
+      collectedTags.push({ value, node: clone });
+    });
+    collectedTags.sort((a, b) => a.value.localeCompare(b.value)).forEach((obj) => target.appendChild(obj.node));
+    const searchInput = $('.js-search-input');
+    target.addEventListener('click', (clickEvt) => {
+      const el = clickEvt.target;
+      if (el.classList.contains('js-event-genre')) {
+        const tag = String(el.dataset.value).toLocaleLowerCase().replace(/\s/g, '-');
+        searchInput.value = `tag:${tag}`;
+        searchInput.click();
+      }
+      console.log('1>>>', el);
+    });
+  }
+
   const setupControls = () => {
     setupSearchField();
     setupThemeSwitcher();
+    setupTagSelector();
     addModalCloseHandler();
     addModalOpener();
   };
