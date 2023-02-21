@@ -26,71 +26,73 @@
     <script src='scripts/modules.controls.js?r={{fileHashes.client_scripts_modules_controls_js}}'></script>
   </head>
   <body>
-    <div class='top-controls'>
-      <div class='flex-child'>
-        <input placeholder='kereső' type='text' class='search-input js-search-input' style='display:none' />
-      </div>
-      <div class='flex-child'>
-        <div class='theme-switcher'>
-          <button class='js-theme-button-light'>{{{require file='images/sun.svg'}}}</button>
-          <button class='js-theme-button-dark'>{{{require file='images/moon.svg'}}}</button>
+    <div class='page-content'>
+      <div class='top-controls'>
+        <div class='flex-child'>
+          <input placeholder='kereső' type='text' class='search-input js-search-input' style='display:none' />
         </div>
-      </div>
-    </div>
-    {{#if hasEvents}}
-      <div class='events-table'>
-        {{#each events}}
-          <div id='event-{{this.rowIdx}}' class='events-table-row js-event js-clickable-row' tabindex='0'>
-            <a href='./{{this.dataUri}}' class='js-event-name js-event-details-opener hidden'>{{this.name}}</a>
-            <div class='event-name'>
-              <span>{{this.name}}</span>
-            </div>
-            <div class='event-merged-section'>
-              <div class='event-genres-tags event-merge-section-col js-event-genres-tags-merged'>
-                {{#if this.genre}}
-                  <span
-                    class='genre genre-or-tag js-event-genre'
-                    style='color:{{this.genreColor}};background-color:{{this.genreColorBg}}'
-                  >
-                    {{this.genre}}
-                  </span>
-                {{/if}}
-                {{#if this.tags}}
-                  {{#each this.tags}}
-                    <span class='tag genre-or-tag js-event-tag'>
-                      {{this}}
-                    </span>
-                  {{/each}}
-                {{/if}}
-              </div>
-              <div
-                class='event-merge-section-col js-event-date'
-                data-date='{{this.startDateTimeNumber}}'
-              >{{this.startDateTimeFormatted}}</div>
-              <div class='event-place event-merge-section-col'><span
-                  href='{{this.place.fbEventUrl}}'
-                  target='_blank'
-                  id='event-place-{{this.place.rowIdx}}'
-                  class='js-event-place-name'
-                >{{this.place.name}}</span></div>
-            </div>
+        <div class='flex-child'>
+          <div class='theme-switcher'>
+            <button class='js-theme-button-light'>{{{require file='images/sun.svg'}}}</button>
+            <button class='js-theme-button-dark'>{{{require file='images/moon.svg'}}}</button>
           </div>
-        {{/each}}
-      </div>
-    {{/if}}
-    <p class='no-events-message js-no-events-message' style='display:none'>
-      Nincsenek új események.
-    </p>
-    <div class='js-modal modal'>
-      <div class='modal-cover-layer'></div>
-      <div class='modal-content'>
-        <div class='modal-header'>
-          <button class='modal-close js-modal-close'>
-            {{{require file='images/iconFeatherXCircle.svg'}}}
-          </button>
         </div>
-        <div class='modal-inner-content js-modal-content'>
-          {{! content }}
+      </div>
+      {{#if hasEvents}}
+        <div class='events-table'>
+          {{#each events}}
+            <div id='event-{{this.rowIdx}}' class='events-table-row js-event js-clickable-row' tabindex='0'>
+              <a href='./{{this.dataUri}}' class='js-event-name js-event-details-opener hidden'>{{this.name}}</a>
+              <div class='event-name'>
+                <span>{{this.name}}</span>
+              </div>
+              <div class='event-merged-section'>
+                <div class='event-genres-tags event-merge-section-col js-event-genres-tags-merged'>
+                  {{#if this.genre}}
+                    <span
+                      class='genre genre-or-tag js-event-genre'
+                      style='color:{{this.genreColor}};background-color:{{this.genreColorBg}}'
+                    >
+                      {{this.genre}}
+                    </span>
+                  {{/if}}
+                  {{#if this.tags}}
+                    {{#each this.tags}}
+                      <span class='tag genre-or-tag js-event-tag'>
+                        {{this}}
+                      </span>
+                    {{/each}}
+                  {{/if}}
+                </div>
+                <div
+                  class='event-merge-section-col js-event-date'
+                  data-date='{{this.startDateTimeNumber}}'
+                >{{this.startDateTimeFormatted}}</div>
+                <div class='event-place event-merge-section-col'><span
+                    href='{{this.place.fbEventUrl}}'
+                    target='_blank'
+                    id='event-place-{{this.place.rowIdx}}'
+                    class='js-event-place-name'
+                  >{{this.place.name}}</span></div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+      <p class='no-events-message js-no-events-message' style='display:none'>
+        Nincsenek új események.
+      </p>
+      <div class='js-modal modal'>
+        <div class='modal-cover-layer'></div>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <button class='modal-close js-modal-close'>
+              {{{require file='images/iconFeatherXCircle.svg'}}}
+            </button>
+          </div>
+          <div class='modal-inner-content js-modal-content'>
+            {{! content }}
+          </div>
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@
     "renderer": "node ./scripts/renderer",
     "renderer:watch": "nodemon --ext hbs,tpl,json,js --watch templates --watch data --watch scripts/renderer ./scripts/renderer",
     "serve": "serve client",
+    "serve:public": "serve -l tcp://0.0.0.0:3030 client",
     "markAsStable": "git tag --force stable && git push --tags"
   },
   "keywords": [],
