@@ -78,6 +78,7 @@ body.show-modal .modal {
 .modal .modal-content .modal-inner-content {
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .modal .modal-content h2 {
@@ -89,6 +90,10 @@ body.show-modal .modal {
 
 .modal .modal-content td {
   padding-bottom: 5px;
+}
+
+.modal .modal-content td.break-all {
+  word-break: break-all;
 }
 
 .modal .modal-content td.label {
@@ -105,6 +110,7 @@ body.show-modal .modal {
   margin-top: 3px;
 }
 
-.modal .modal-content td.value-description {
+.modal .modal-content .value-description-inner {
   white-space: pre-wrap;
+  word-break: break-all;
 }

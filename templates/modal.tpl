@@ -36,7 +36,7 @@
     <tr>
       <td class="label"><label>jegy</label></td>
       <% if (ticketUrl) { %>
-        <td><a href="<%- ticketUrl %>" target="_blank"><%- ticket %></a></td>
+        <td class="break-all"><a href="<%- ticketUrl %>" target="_blank"><%- ticket %></a></td>
       <% } else { %>
         <td><%- ticket %></td>
       <% } %>
@@ -44,6 +44,8 @@
   <% } %>
   <tr>
     <td class="label"><label>leírás</label></td>
-    <td class="value-description"><%- description %></td>
+    <td class="value-description">
+      <div class="value-description-inner"><%- description %></div>
+    </td>
 </tr>
 </table>
