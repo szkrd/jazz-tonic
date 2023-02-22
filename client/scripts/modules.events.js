@@ -44,16 +44,37 @@ window.pv.modules.events = (() => {
     matcher(event.place.name, text);
 
   /**
-   * Search in the events array for the text, shows and hides the result
+   * Search in the events array for the text, shows and hides the result;
+   * it tries to do an exact match first, then an AND operator based (for all words);
+   * special prefixes:
+   * `tag:jazz` - search this word (jazz) only in the genres (how about tags?)
    */
   function searchAndFilter(text) {
     storage.save('searchTerm', text);
     if (!text) return events.filter((event) => !event.expired).forEach(showEvent); // arrays are OR based
     if (text) events.forEach(hideEvent);
-    const matchEvent = matcher.all(text);
-    const notExpiredEvents = events.filter((event) => !event.expired);
-    let results = [];
+    text = text.trim().replace(/\s+/g, ' '); // though it's usually trimmed already
+    let notExpiredEvents = events.filter((event) => !event.expired);
+
+    // first we remove the tag:xxxx words and use them for prefiltering
+    const words = text.split(' ');
+    const tagWords = words.filter((word) => word.startsWith('tag:'));
+    if (tagWords.length > 0) {
+      let tags = [];
+      tagWords.forEach((tagWord) => {
+        tags.push(tagWord.replace(/^tag:/, ''));
+        text = text.replace(tagWord, '').replace(/\s+/g, ' ').trim();
+      });
+      const normalizeTag = (tagName) => tagName.toLocaleLowerCase().replace(/\s/g, '-');
+      tags = tags.map(normalizeTag);
+      if (tags.length > 0) {
+        notExpiredEvents = notExpiredEvents.filter((event) => tags.includes(normalizeTag(event.genre)));
+      }
+    }
+
     const andOperator = ' '; // by default I usually use a comma, but the "real" user may not think like that...
+    const matchEvent = matcher.all(text);
+    let results = [];
 
     // triggers the AND operator (so "vocal jazz, modern jazz" means two searches internally)
     if (text.includes(andOperator)) {
@@ -108,7 +129,7 @@ window.pv.modules.events = (() => {
     events.forEach((event) => {
       if (dayjs(event.startDateTimeNumber).isBefore(dayjs(currentDate))) {
         hideEvent(event);
-        event.expired = true;
+        $(`#event-${event.rowIdx}`).dataset.expired = event.expired = true;
         hiddenEventCount++;
       }
     });

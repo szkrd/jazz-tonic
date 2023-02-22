@@ -12,12 +12,12 @@
 
 .top-controls .search-input {
   border-radius: 3px;
-  width: 300px;
+  width: 400px;
   height: 40px;
   line-height: 40px;
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 500px) {
   .top-controls .search-input {
     width: calc(100vw - 89px);
   }
@@ -69,4 +69,8 @@
 .top-controls .tag-filter span.genre:hover {
   border-color: var(--color-tag-filter-border-hover);
   color: var(--color-tag-filter-text-hover);
+}
+
+.top-controls .tag-filter span.genre.selected {
+  border-color: var(--color-tag-filter-border-hover);
 }

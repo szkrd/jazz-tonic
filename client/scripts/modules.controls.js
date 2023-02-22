@@ -3,10 +3,19 @@ window.pv.modules = window.pv.modules || {};
 window.pv.modules.controls = (() => {
   const { templates, modules } = window.pv;
   const { log, resource, storage } = window.pv.utils;
-  const { $, $$, showEl } = window.pv.utils.dom;
+  const { $, $$, showEl, hideEl, triggerInputEvent } = window.pv.utils.dom;
 
   // SEARCH FIELD
   // ============
+
+  function markTagBasedOnSearchField(text) {
+    const tagEls = $$('.js-clickable-tag-filter .js-event-genre');
+    tagEls.forEach((node) => node.classList.remove('selected'));
+    const tags = ((text + ' ').match(/tag:[^\s]*\s/gi) || []).map((text) => text.replace(/^tag:/, '').trim());
+    tagEls.forEach((node) => {
+      if (tags.includes(node.dataset.normalizedValue)) node.classList.add('selected');
+    });
+  }
 
   /**
    * On key up search for substrings in the name content of the events
@@ -16,9 +25,13 @@ window.pv.modules.controls = (() => {
     showEl(searchInput);
     const { searchAndFilter } = modules.events;
     searchInput.value = storage.load('searchTerm');
-    searchInput.addEventListener('keyup', (keyEvt) => searchAndFilter(keyEvt.target.value.trim()));
+    searchInput.addEventListener('input', (keyEvt) => {
+      const currentValue = keyEvt.target.value.trim();
+      searchAndFilter(currentValue);
+      markTagBasedOnSearchField(currentValue);
+    });
     searchInput.addEventListener('focus', (keyEvt) => keyEvt.target.select());
-    searchAndFilter(searchInput.value.trim());
+    triggerInputEvent(searchInput);
   }
 
   // MODAL
@@ -95,32 +108,38 @@ window.pv.modules.controls = (() => {
     themeButtons.light.addEventListener('click', (clickEvt) => setDarkMode(clickEvt.currentTarget, false));
   }
 
+  // TAG SELECTOR
+  // ============
+
   function setupTagSelector() {
     const STRIP_COLOR = true;
     const target = $('.js-clickable-tag-filter');
     const collectedValues = [];
     const collectedTags = [];
+    // clone the tags from the dom
     $$('.genre.genre-or-tag').forEach((node) => {
-      // const row = node.closest('.js-event');
-      // TODO: filter for expired in the real events list!
-      // if (row.style.display === 'none') return; // hidden by date range OR filter, damn
+      const row = node.closest('.js-event');
+      // do not collect from expired event rows (it would be nicer to mark the
+      // irrelevant tags, then we could style them, but that's not as simple as this)
+      if (row.dataset.expired) return;
       const value = node.dataset.value;
       if (collectedValues.includes(value)) return;
       collectedValues.push(value);
       const clone = node.cloneNode(true);
       if (STRIP_COLOR) clone.style = '';
+      clone.dataset.normalizedValue = value.replace(/\s/g, '-').toLocaleLowerCase();
       collectedTags.push({ value, node: clone });
     });
     collectedTags.sort((a, b) => a.value.localeCompare(b.value)).forEach((obj) => target.appendChild(obj.node));
+    if (collectedTags.length <= 1) hideEl(target);
     const searchInput = $('.js-search-input');
     target.addEventListener('click', (clickEvt) => {
       const el = clickEvt.target;
       if (el.classList.contains('js-event-genre')) {
         const tag = String(el.dataset.value).toLocaleLowerCase().replace(/\s/g, '-');
         searchInput.value = `tag:${tag}`;
-        searchInput.click();
+        triggerInputEvent(searchInput);
       }
-      console.log('1>>>', el);
     });
   }
 
@@ -130,6 +149,7 @@ window.pv.modules.controls = (() => {
     setupTagSelector();
     addModalCloseHandler();
     addModalOpener();
+    triggerInputEvent($('.js-search-input'));
   };
 
   return { setup: setupControls };
