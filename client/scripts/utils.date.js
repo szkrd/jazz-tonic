@@ -13,6 +13,11 @@ window.pv.utils.date = (() => {
     return '';
   }
 
+  /**
+   * Today is YYYY-MM-DD formatted date, name is the name of the range (tomorrow,
+   * weekend, this week etc). Returns a human readable search string: "2022-11-25"
+   * or "2022-11-25*2022-12-24" for "real" ranges.
+   */
   function getFlexibleDateRange(today, name) {
     today = today || f(dayjs());
     const dToday = dayjs(today);

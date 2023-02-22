@@ -1,6 +1,7 @@
 window.pv = window.pv || {};
 window.pv.modules = window.pv.modules || {};
 window.pv.modules.controls = (() => {
+  const _ = window._;
   const { templates, modules } = window.pv;
   const { log, resource, storage, url, date } = window.pv.utils;
   const { $, $$, showEl, hideEl, triggerInputEvent } = window.pv.utils.dom;
@@ -25,13 +26,15 @@ window.pv.modules.controls = (() => {
     showEl(searchInput);
     const { searchAndFilter } = modules.events;
     searchInput.value = storage.load('searchTerm');
-    searchInput.addEventListener('input', (keyEvt) => {
-      const currentValue = keyEvt.target.value.trim();
-      searchAndFilter(currentValue);
-      markTagBasedOnSearchField(currentValue);
-    });
+    searchInput.addEventListener(
+      'input',
+      _.debounce((keyEvt) => {
+        const currentValue = keyEvt.target.value.trim();
+        searchAndFilter(currentValue);
+        markTagBasedOnSearchField(currentValue);
+      }, 500)
+    );
     searchInput.addEventListener('focus', (keyEvt) => keyEvt.target.select());
-    triggerInputEvent(searchInput);
   }
 
   // MODAL
@@ -164,10 +167,10 @@ window.pv.modules.controls = (() => {
       const value = target.dataset.value;
       const today = (url.queryString.parse() || {}).currentDate || null;
       const dateText = date.getFlexibleDateRange(today, value);
-      log.info(`Date filter; dataset value: "${value}", current date: "${today}", result: "${dateText}"`);
       searchInput.value = (' ' + searchValue + ' ')
-        .replace(/ \d{4}-\d{2}-\d{2}\*\d{4}-\d{2}-\d{2} /g, '') // double date
-        .replace(/ \d{4}-\d{2}-\d{2} /g, '') // single date
+        .replace(/ /g, '  ')
+        .replace(/ \d{4}-\d{2}-\d{2}\*\d{4}-\d{2}-\d{2} /g, ' ') // double date
+        .replace(/ \d{4}-\d{2}-\d{2} /g, ' ') // single date
         .replace(/\s+/g, ' ') // leftover spaces
         .trim();
       searchInput.value = (searchInput.value + ' ' + dateText).trim();

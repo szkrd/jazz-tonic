@@ -72,6 +72,28 @@ window.pv.modules.events = (() => {
       }
     }
 
+    // we will do the same for dates (for their own format)
+    const datePairs = [];
+    text = (' ' + text + ' ').replace(/ /g, '  ').replace(/ \d{4}-\d{2}-\d{2}\*\d{4}-\d{2}-\d{2} /g, (found) => {
+      datePairs.push(found.split('*').map((part) => part.trim())) * 0 || ' ';
+      return ' ';
+    });
+    text = (' ' + text + ' ').replace(/ /g, '  ').replace(/ \d{4}-\d{2}-\d{2} /g, (found) => {
+      return datePairs.push([found.trim(), found.trim()]) * 0 || ' ';
+    });
+    text = text.trim().replace(/\s+/g, ' ');
+    if (datePairs.length > 0) {
+      notExpiredEvents = notExpiredEvents.filter((event) => {
+        const dStart = dayjs(dayjs(event.startDateTimeNumber).format('YYYY-MM-DD'));
+        return datePairs.some(
+          (currentDate) =>
+            dStart.isSame(currentDate[0], 'day') || // same ast start
+            dStart.isSame(currentDate[1], 'day') || // same as end
+            (dStart.isAfter(currentDate[0], 'day') && dStart.isBefore(currentDate[1], 'day')) // between
+        );
+      });
+    }
+
     const andOperator = ' '; // by default I usually use a comma, but the "real" user may not think like that...
     const matchEvent = matcher.all(text);
     let results = [];
