@@ -2,7 +2,7 @@ window.pv = window.pv || {};
 window.pv.modules = window.pv.modules || {};
 window.pv.modules.controls = (() => {
   const { templates, modules } = window.pv;
-  const { log, resource, storage } = window.pv.utils;
+  const { log, resource, storage, url, date } = window.pv.utils;
   const { $, $$, showEl, hideEl, triggerInputEvent } = window.pv.utils.dom;
 
   // SEARCH FIELD
@@ -137,16 +137,50 @@ window.pv.modules.controls = (() => {
       const el = clickEvt.target;
       if (el.classList.contains('js-event-genre')) {
         const tag = String(el.dataset.value).toLocaleLowerCase().replace(/\s/g, '-');
-        searchInput.value = `tag:${tag}`;
+        const searchValue = searchInput.value.trim();
+        const tagCount = (searchValue.match(/tag:/g) || []).length;
+        const hasTagAlready = searchValue.includes(`tag:${tag}`);
+        if (hasTagAlready) {
+          searchInput.value = (searchValue + ' ').replace(`tag:${tag}`, ` `);
+        } else {
+          // zero or more and it's not already there: add it - only one: replace
+          if (tagCount === 0 || tagCount > 1) searchInput.value = `${searchValue} tag:${tag}`.trim();
+          if (tagCount === 1) searchInput.value = (searchValue + ' ').replace(/tag:[^\s]*\s/, `tag:${tag} `);
+        }
+        searchInput.value = searchInput.value.trim().replace(/\s+/g, ' '); // fix spaces we may have introduced
         triggerInputEvent(searchInput);
       }
     });
+  }
+
+  // DATE SELECTOR
+  // =============
+
+  function setupDateSelector() {
+    const changeDate = (clickEvt) => {
+      const searchInput = $('.js-search-input');
+      const searchValue = searchInput.value.trim();
+      const target = clickEvt.target;
+      const value = target.dataset.value;
+      const today = (url.queryString.parse() || {}).currentDate || null;
+      const dateText = date.getFlexibleDateRange(today, value);
+      log.info(`Date filter; dataset value: "${value}", current date: "${today}", result: "${dateText}"`);
+      searchInput.value = (' ' + searchValue + ' ')
+        .replace(/ \d{4}-\d{2}-\d{2}\*\d{4}-\d{2}-\d{2} /g, '') // double date
+        .replace(/ \d{4}-\d{2}-\d{2} /g, '') // single date
+        .replace(/\s+/g, ' ') // leftover spaces
+        .trim();
+      searchInput.value = (searchInput.value + ' ' + dateText).trim();
+      triggerInputEvent(searchInput);
+    };
+    $$('.js-mod-date').forEach((el) => el.addEventListener('click', changeDate));
   }
 
   const setupControls = () => {
     setupSearchField();
     setupThemeSwitcher();
     setupTagSelector();
+    setupDateSelector();
     addModalCloseHandler();
     addModalOpener();
     triggerInputEvent($('.js-search-input'));

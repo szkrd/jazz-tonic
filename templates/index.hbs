@@ -23,6 +23,7 @@
     <script src='scripts/utils.dom.js?r={{fileHashes.client_scripts_utils_dom_js}}'></script>
     <script src='scripts/utils.i18n.js?r={{fileHashes.client_scripts_utils_i18n_js}}'></script>
     <script src='scripts/utils.resource.js?r={{fileHashes.client_scripts_utils_resource_js}}'></script>
+    <script src='scripts/utils.date.js?r={{fileHashes.client_scripts_utils_date_js}}'></script>
     <script src='scripts/modules.events.js?r={{fileHashes.client_scripts_modules_events_js}}'></script>
     <script src='scripts/modules.controls.js?r={{fileHashes.client_scripts_modules_controls_js}}'></script>
   </head>
@@ -42,6 +43,17 @@
         </div>
         <div class='top-controls-row'>
           <div class='js-clickable-tag-filter tag-filter'></div>
+        </div>
+        <div class='top-controls-row'>
+          <div class='js-clickable-dates date-filter'>
+            {{{require file='images/calendar.svg'}}}
+            <button class='date js-mod-date' data-value='today'>ma</button>
+            <button class='date js-mod-date' data-value='tomorrow'>holnap</button>
+            <button class='date js-mod-date' data-value='weekend'>hétvégén</button>
+            <button class='date js-mod-date' data-value='this-week'>egész héten</button>
+            <button class='date js-mod-date' data-value='next-week'>jövő héten</button>
+            <button class='date js-mod-date' data-value='reset'>bármikor</button>
+          </div>
         </div>
       </div>
       {{#if hasEvents}}
