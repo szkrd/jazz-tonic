@@ -2,7 +2,7 @@
   "mainExcelFile": "data/main.xlsx",
   "xlsxTabPerformers": "performers",
   "xlsxTabPlaces": "places",
-  "xlsxTabEvents": "Event új",
+  "xlsxTabEvents": "wip",
   "extraVenueMatchers": {
     "riff": ["riff budapest", "riff"],
     "szimpla": ["szimpla kert", "szimpla"]

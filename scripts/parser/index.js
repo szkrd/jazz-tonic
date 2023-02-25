@@ -11,7 +11,10 @@ const sheetNames = Object.keys(workbook.Sheets);
 
 function precheckSheets() {
   [config.xlsxTabPlaces, config.xlsxTabPerformers, config.xlsxTabEvents].forEach((key) => {
-    if (!sheetNames.includes(key)) log.die(`Tab called "${key}" was not found in the xlsx file!`);
+    if (!sheetNames.includes(key))
+      log.die(
+        `Tab called "${key}" was not found in the xlsx file!\n` + `Available names are: ${sheetNames.join(', ')}`
+      );
   });
 }
 

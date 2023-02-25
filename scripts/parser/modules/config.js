@@ -30,5 +30,10 @@ if (!fs.existsSync(mainExcelFile)) error = "mainExcelFile doesn't exist?";
 
 if (error) log.die(`Could not parse the configuration.\n${error}`);
 
+// fix sheet names (slashes are removed by the lib? or the online exporter?)
+['xlsxTabPlaces', 'xlsxTabPerformers', 'xlsxTabEvents'].map((name) => {
+  config[name] = config[name].replaceAll('/', '');
+});
+
 // export
 module.exports = config;

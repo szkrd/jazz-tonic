@@ -4,6 +4,8 @@ const log = require('../../modules/log');
 
 const STRINGIFY_FIELDS = ['date', 'startTime', 'endTime'];
 
+const undefAsNull = (val) => (val === undefined ? null : val);
+
 /** Tries to retrieve the full metadata for a column, while ignoring hidden ones */
 function getRawRow(workSheet, idx) {
   idx = idx + 2; // skip the header and it's one based
@@ -50,12 +52,12 @@ module.exports = function xlsJsonToRows(workSheet) {
     const rawRow = getRawRow(workSheet, idx);
     const currentRow = Object.values(removeInvalidKeys(item));
     // checking the last col for equality would be MUCH better and harder (because of dangling nulls)
-    if (rawRow[0].v !== currentRow[0])
+    if (undefAsNull(rawRow[0].v) !== undefAsNull(currentRow[0])) {
       log.die(
         `Error parsing rows! Did you hide rows? Mismatch detected in row ${idx + 2}, raw vs json:\n` +
           JSON.stringify({ raw: rawRow[0].v, json: currentRow[0] }, null, 2)
       );
-
+    }
     Object.keys(item).forEach((oKey, keyIdx) => {
       let val = item[oKey];
       if (oKey.startsWith('_') || String(oKey).trim() === '') return; // skip hidden cols
