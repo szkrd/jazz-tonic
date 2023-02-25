@@ -8,6 +8,7 @@ After opening the project, install the dependencies with `npm i` (from the termi
 - `npm run test` = run tests
 - `npm run parser` = processes **main.xlsx** and outputs json data files (don't forget to place the xlsx into the data dir)
 - `npm run renderer` = processes **main.json** and outputs html and js files (don't forget to run the parser first)
+- `npm start` = runs both the parser and the renderer (shorthand)
 - `npm run renderer:watch` = continually runs the renderer listening for changes in the _hbs_ file
 - `npm run serve` = fires up a local server that serves static files from the **/client** directory
 - `npm run lint` = checks the code for common problems

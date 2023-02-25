@@ -32,7 +32,7 @@ function removeInvalidKeys(obj) {
  * Cleans up rows by ignoring the lines marked with ignore:1
  * and camelizes the row object keys.
  */
-module.exports = function xlsJsonToRows(workSheet) {
+module.exports = function xlsJsonToRows(workSheet, debug = false) {
   const rows = xlsx.utils.sheet_to_json(workSheet, {
     blankrows: false,
     defval: null,
@@ -41,6 +41,7 @@ module.exports = function xlsJsonToRows(workSheet) {
     raw: true,
   });
   const ret = [];
+  if (debug) log.debug(rows);
   for (let idx = 0; idx < rows.length; idx++) {
     const item = rows[idx];
     if ([1, true, '1', 'true'].includes(item.ignore)) continue; // skip ignored lines

@@ -29,6 +29,11 @@ module.exports = function parseEvents(eventsXlsx) {
       log.error(`Invalid startDate at ${row.rowIdx}, "${row.startDate}"!`);
       row.startDate = null;
     }
+    let soldOut = 0;
+    config.soldOutKeywords.forEach((keyword) => {
+      soldOut += ((row.name || '').toLocaleLowerCase().match(keyword.toLocaleLowerCase()) || []).length;
+    });
+    row.soldOut = soldOut > 0;
     if (row.date) row.date = normalizeEventDate(row.date);
     if (row.genre) row.genre = row.genre.toLocaleLowerCase();
     // create a ticketUrl for ticket

@@ -56,10 +56,16 @@
           </div>
         </div>
       </div>
+      <div class='js-event-count event-count' style='display:none'></div>
+      {{! EVENTS TABLE {{{ }}
       {{#if hasEvents}}
         <div class='events-table'>
           {{#each events}}
-            <div id='event-{{this.rowIdx}}' class='events-table-row js-event js-clickable-row' tabindex='0'>
+            <div
+              id='event-{{this.rowIdx}}'
+              class='events-table-row js-event js-clickable-row {{showif this.soldOut "sold-out"}}'
+              tabindex='0'
+            >
               <a href='./{{this.dataUri}}' class='js-event-name js-event-details-opener hidden'>{{this.name}}</a>
               <div class='event-name'>
                 <span>{{this.name}}</span>
@@ -115,6 +121,7 @@
         </div>
       </div>
     </div>
+    {{!-- }}} EVENTS TABLE --}}
     <script src='scripts/main.js?r={{fileHashes.client_scripts_main_js}}'></script>
     {{{templatize file='modal'}}}
   </body>

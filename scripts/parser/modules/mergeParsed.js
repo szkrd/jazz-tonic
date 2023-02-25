@@ -3,7 +3,6 @@ const fs = require('fs');
 const config = require('./config');
 const slugify = require('../utils/string/slugify');
 const log = require('./log');
-const chalk = require('chalk');
 const { uniq } = require('lodash');
 
 const extraVenueMatchers = Object.values(config.extraVenueMatchers || {});
@@ -31,6 +30,9 @@ module.exports = function mergeParsed(placesData, performersData, eventsData) {
   // so this means that after a release/build it may change
   let genreIds = [];
 
+  const missingPerformers = [];
+  const missingPlaces = [];
+
   // process event rows
   merged.forEach((event) => {
     // link to places: first try with "venue"
@@ -46,7 +48,7 @@ module.exports = function mergeParsed(placesData, performersData, eventsData) {
       // match by address
       event.place = placesByAddressMap[venueAddressSlug];
       placeFound = true;
-    } else {
+    } else if (venueSlug) {
       // match by alternate names
       log.info(`Venue slug "${venueSlug}" had no matching pair in places, trying "extraVenueMatchers" from config.`);
       const extras = getExtraVenueMatches(venueSlug);
@@ -59,18 +61,14 @@ module.exports = function mergeParsed(placesData, performersData, eventsData) {
             break;
           }
         }
-      }
+      } // else: missing venue name. so it goes (we already know about it).
     }
     if (!placeFound) {
-      log.warning(
-        `Could not find a matching ${chalk.red('place')} for event #${event.rowIdx}:\n` +
-          `venue: ${event.venue}\nvenueAddress: ${event.venueAddress}`
-      );
-      event.__venue = event.venue; // backup the old values
-      event.__venueAddress = event.venueAddress;
+      missingPlaces.push({ name: event.venue || '', rowIdx: event.rowIdx });
+      event.place = { rowIdx: -1, name: event.venue || '', address: event.venueAddress || '' };
     }
 
-    // link to performers
+    // link to performers (though we can have some really sparse data)
     const performerSlug = slugify(event.performer);
     let performerFound = false;
     if (performersByNameMap[performerSlug]) {
@@ -78,15 +76,12 @@ module.exports = function mergeParsed(placesData, performersData, eventsData) {
       performerFound = true;
     }
     if (!performerFound) {
-      log.warning(
-        `Could not find a matching ${chalk.red('performer')} for event #${event.rowIdx}:\n` +
-          `venue: ${event.venue}\nperformer: ${event.performer}`
-      );
-      event.__performer = event.performer;
-      delete event.performer; // delete only if we failed to find it, unlike with venues
+      missingPerformers.push({ name: event.performer || '', rowIdx: event.rowIdx });
+      event.performer = { rowIdx: -1, name: event.performer || '' };
     }
+    event.hasPerformer = !!event.performer.name;
 
-    // remove some leftovers
+    // remove some leftovers (venue is the old name, place is the good one)
     delete event.venue;
     delete event.venueAddress;
 
@@ -110,5 +105,16 @@ module.exports = function mergeParsed(placesData, performersData, eventsData) {
   const ret = { events: merged, createdAt: new Date().toISOString(), user };
   fs.writeFileSync(fileName, JSON.stringify(ret, null, 2), 'utf-8');
   log.info(`Merging done.\nCollected ${genreIds.length} genres, combined ${merged.length} rows.`);
+  if (missingPerformers.length > 0) {
+    log.infoBuffer(`Performers not found in sheet "${config.xlsxTabPerformers}": ${missingPerformers.length}`, {
+      missingPerformers,
+    });
+  }
+  if (missingPlaces.length > 0) {
+    log.infoBuffer(`Places not found in sheet "${config.xlsxTabPlaces}": ${missingPlaces.length}`, {
+      missingPlaces,
+    });
+  }
+  log.info(``);
   return ret;
 };

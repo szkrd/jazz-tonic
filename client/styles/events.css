@@ -1,3 +1,11 @@
+/* EVENT COUNT */
+
+.event-count {
+  text-align: right;
+  font-size: 12px;
+  padding: 0 5px 0 0;
+}
+
 /* LIST OF EVENTS */
 
 .events-table {
@@ -18,6 +26,11 @@
   border-color: var(--color-events-row-border-hover);
   box-shadow: 0 0 30px inset var(--color-events-row-hover-inset-shadow);
   outline: 0;
+}
+
+.events-table-row.sold-out {
+  opacity: 0.5;
+  filter: grayscale(1);
 }
 
 .events-table-row .event-merged-section {

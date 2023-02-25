@@ -19,11 +19,13 @@ function precheckSheets() {
 }
 
 function main() {
+  log.banner('parsing');
   precheckSheets();
   const placesData = parsePlaces(workbook.Sheets[config.xlsxTabPlaces]);
   const performersData = parsePerformers(workbook.Sheets[config.xlsxTabPerformers]);
-  const eventsData = parseEvents(workbook.Sheets[config.xlsxTabEvents]);
+  const eventsData = parseEvents(workbook.Sheets[config.xlsxTabEvents], true);
   mergeParsed(placesData, performersData, eventsData);
+  log.dumpInfoBuffer();
 }
 
 main();

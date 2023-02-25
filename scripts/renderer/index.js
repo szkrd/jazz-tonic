@@ -9,6 +9,8 @@ require('dayjs/locale/hu');
 const chalk = require('chalk');
 const { mkdir } = require('shelljs');
 
+log.banner('rendering');
+
 let mainJson = null;
 try {
   mainJson = require('../../data/main.json');
@@ -19,6 +21,10 @@ try {
 const rootDir = '.'; // use process argv 1?
 const templatesDir = path.join(rootDir, '/templates');
 const outDir = path.join(rootDir, '/client');
+
+hbs.registerHelper('showif', (bool, val) => {
+  return val && bool ? String(val) : '';
+});
 
 hbs.registerHelper('templatize', (options) => {
   let text = fs.readFileSync(path.join(templatesDir, options.hash.file + '.tpl'), 'utf-8');

@@ -1,6 +1,7 @@
 window.pv = window.pv || {};
 window.pv.utils = window.pv.utils || {};
 window.pv.utils.dom = (() => {
+  const { log } = window.pv.utils;
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const $$ = (selector, parent = document) => Array.from(parent.querySelectorAll(selector));
   const showEl = (el) => el.style.removeProperty('display');
@@ -11,11 +12,21 @@ window.pv.utils.dom = (() => {
     el.dispatchEvent(event);
   }
 
+  function getInnerText(selectorOrEl, rootEl) {
+    const el = selectorOrEl instanceof HTMLElement ? selectorOrEl : $(selectorOrEl, rootEl);
+    if (!el) {
+      log.warn('Element for not found.', { selectorOrEl, rootEl });
+      return '';
+    }
+    return el.innerText.trim();
+  }
+
   return {
     $,
     $$,
     showEl,
     hideEl,
     triggerInputEvent,
+    getInnerText,
   };
 })();

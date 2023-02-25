@@ -3,7 +3,7 @@ window.pv.modules = window.pv.modules || {};
 window.pv.modules.events = (() => {
   const dayjs = window.dayjs;
   const { storage, i18n, log } = window.pv.utils;
-  const { $, $$, showEl, hideEl } = window.pv.utils.dom;
+  const { $, $$, showEl, hideEl, getInnerText } = window.pv.utils.dom;
 
   const events = [];
 
@@ -29,6 +29,17 @@ window.pv.modules.events = (() => {
     hideEl($(`#event-${event.rowIdx}`));
   }
 
+  function updateEventCountDisplay(items) {
+    items = items || events.filter((event) => !event.expired);
+    const countEl = $('.js-event-count');
+    if (items.length === 0) {
+      hideEl(countEl);
+    } else {
+      countEl.innerHTML = `${items.length} esemény`;
+      showEl(countEl);
+    }
+  }
+
   // search for case and accent insensitive susbtrings
   const matcher = (value, needle) => {
     if (value === '' || value === undefined) return false;
@@ -51,7 +62,11 @@ window.pv.modules.events = (() => {
    */
   function searchAndFilter(text) {
     storage.save('searchTerm', text);
-    if (!text) return events.filter((event) => !event.expired).forEach(showEvent); // arrays are OR based
+    if (!text) {
+      events.filter((event) => !event.expired).forEach(showEvent); // arrays are OR based
+      updateEventCountDisplay();
+      return;
+    }
     if (text) events.forEach(hideEvent);
     text = text.trim().replace(/\s+/g, ' '); // though it's usually trimmed already
     let notExpiredEvents = events.filter((event) => !event.expired);
@@ -119,6 +134,7 @@ window.pv.modules.events = (() => {
     if (strictResults.length > 0) results = strictResults;
 
     results.forEach(showEvent);
+    updateEventCountDisplay(results);
   }
 
   /**
@@ -128,13 +144,13 @@ window.pv.modules.events = (() => {
     $$('.js-event').forEach((el) => {
       const expired = false; // will be handled later
       const rowIdx = parseInt(el.id.replace(/^event-/, ''), 10);
-      const name = $('.js-event-name', el).innerText.trim();
+      const name = getInnerText('.js-event-name', el);
       const startDateTimeNumber = parseInt($('.js-event-date', el).dataset.date, 10);
-      const startDateTimeFormatted = $('.js-event-date', el).innerText.trim();
-      const genre = $('.js-event-genre', el).innerText.trim();
-      const tags = $$('.js-event-tag', el).map((tagEl) => tagEl.innerText.trim());
+      const startDateTimeFormatted = getInnerText('.js-event-date', el);
+      const genre = getInnerText('.js-event-genre', el);
+      const tags = $$('.js-event-tag', el).map((tagEl) => getInnerText(tagEl));
       const place = {
-        name: $('.js-event-place-name', el).innerText.trim(),
+        name: getInnerText('.js-event-place-name', el),
         rowIdx: parseInt($('.js-event-place-name', el).id.replace(/^event-place-/, ''), 10),
       };
       addEvent({ rowIdx, name, startDateTimeNumber, startDateTimeFormatted, genre, tags, place, expired });
