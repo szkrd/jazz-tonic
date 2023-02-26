@@ -8,6 +8,7 @@ const dayjs = require('dayjs');
 require('dayjs/locale/hu');
 const chalk = require('chalk');
 const { mkdir } = require('shelljs');
+const { sortBy } = require('lodash');
 
 log.banner('rendering');
 
@@ -74,6 +75,9 @@ function processEvents() {
 
   // global metadata (already stringified)
   mainJson.meta = JSON.stringify({ releaseId: mainJson.releaseId });
+
+  // last minute sort
+  mainJson.events = sortBy(mainJson.events, ['startDateTimeNumber']);
 
   mainJson.events.forEach((event) => {
     // add event.active to valid events (ones that are in range)
