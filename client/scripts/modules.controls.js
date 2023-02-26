@@ -84,7 +84,15 @@ window.pv.modules.controls = (() => {
           })
           .catch((err) => {
             log.error(`Download failed for js resource url "${href}"!`, err);
-            setModalInnerContent('<p class="modal-error-message">Hiba történt az esemény betöltésekor!</p>');
+            setModalInnerContent(
+              [
+                '<p class="modal-error-message">',
+                '  Hiba történt az esemény betöltésekor!',
+                '  <br><br>',
+                '  Lehet, hogy időközben frissültek az események, próbálja újratölteni az oldalt.',
+                '</p>',
+              ].join('')
+            );
           });
       });
     });
