@@ -14,7 +14,7 @@
     <link rel='stylesheet' href='styles/top.css?r={{fileHashes.client_styles_top_css}}' />
     <link rel='stylesheet' href='styles/events.css?r={{fileHashes.client_styles_events_css}}' />
     <link rel='stylesheet' href='styles/modal.css?r={{fileHashes.client_styles_modal_css}}' />
-    <script type='text/javascript'>window.pv = { meta: {{{meta}}}, templates: {} }</script>
+    <script type='text/javascript'>window.pv = { meta: {{{meta}}}, templates: {}, config: {{{config}}} }</script>
     <script src='scripts/vendor/lodash.4.17.21.min.js'></script>
     <script src='scripts/vendor/dayjs.1.11.7.min.js'></script>
     <script src='scripts/utils.log.js?r={{fileHashes.client_scripts_utils_log_js}}'></script>
@@ -90,7 +90,7 @@
                   {{/if}}
                 </div>
                 <div
-                  class='event-merge-section-col js-event-date'
+                  class='event-merge-section-col event-date js-event-date'
                   data-date='{{this.startDateTimeNumber}}'
                 >{{this.startDateTimeFormatted}}</div>
                 <div class='event-place event-merge-section-col'><span

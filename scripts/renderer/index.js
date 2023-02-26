@@ -11,12 +11,14 @@ const { mkdir } = require('shelljs');
 
 log.banner('rendering');
 
+// the main json we use to render the data
 let mainJson = null;
 try {
   mainJson = require('../../data/main.json');
 } catch {
   log.die('Parsed data not found (in "data/main.json")?');
 }
+mainJson.config = JSON.stringify({}); // add shared config here, should we need it
 
 const rootDir = '.'; // use process argv 1?
 const templatesDir = path.join(rootDir, '/templates');
@@ -83,7 +85,7 @@ function processEvents() {
     // add startDateTime, startDateTimeNumber and formattedDate
     event.startDateTime = dateTime;
     event.startDateTimeNumber = dayjs(dateTime).toDate() * 1;
-    event.startDateTimeFormatted = dayjs(dateTime).locale('hu').format(config.outputDateFormat);
+    event.startDateTimeFormatted = dayjs(dateTime).locale('hu').format(config.eventDateFormat);
 
     // add relative data location (where the current event's js will be saved)
     event.dataUri = `${dataUri}/event-${event.rowIdx}.js?r=${mainJson.releaseId}`.replace(/^\//, '');

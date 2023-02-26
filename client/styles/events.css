@@ -15,10 +15,12 @@
 .events-table-row {
   border: 1px solid var(--color-events-row-border);
   background-color: var(--color-events-row-bg);
-  margin: 0 0 6px;
+  margin: 0 0 15px;
   border-radius: 3px;
-  padding: 8px 5px;
+  padding: 10px;
   cursor: pointer;
+  font-size: 13px;
+  font-weight: 100;
 }
 
 .events-table-row:focus,
@@ -40,6 +42,11 @@
 
 .events-table-row .event-name-link {
   color: var(--color-events-event-name-link);
+}
+
+.events-table-row .event-name {
+  font-size: 16px;
+  font-weight: 500; /* mac's helvetica will render it just fine */
 }
 
 .events-table-row .event-merged-section > .event-merge-section-col:not(:first-of-type) {
