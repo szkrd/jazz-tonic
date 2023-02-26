@@ -2,15 +2,22 @@ window.pv = window.pv || {};
 window.pv.modules = window.pv.modules || {};
 window.pv.modules.events = (() => {
   const dayjs = window.dayjs;
-  const { storage, i18n, log } = window.pv.utils;
+  const { storage, i18n, log, url } = window.pv.utils;
   const { $, $$, showEl, hideEl, getInnerText } = window.pv.utils.dom;
 
   const events = [];
 
   // Add global callback for event insertion (using poor man's jsonp callback)
   window.pv.addEvent = (data) => {
-    log.info(`Event #${data.rowIdx} data inserted via callback`);
     const existingEventIdx = events.findIndex((event) => event.rowIdx === data.rowIdx);
+    log.info(`Event #${data.rowIdx} data inserted via callback`, { remote: data, local: events[existingEventIdx] });
+    const rowMismatch = data.name !== events[existingEventIdx]?.name;
+    // unfortunately this can happen if we had multiple releases, but the user
+    // never reloaded the tab during that time, so we download the old data
+    if (rowMismatch) {
+      window.scrollTo(0, 0);
+      url.forceReload();
+    }
     if (existingEventIdx > -1) events[existingEventIdx] = data;
     else events.push(data);
   };
