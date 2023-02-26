@@ -76,9 +76,6 @@ function processEvents() {
   // global metadata (already stringified)
   mainJson.meta = JSON.stringify({ releaseId: mainJson.releaseId });
 
-  // last minute sort
-  mainJson.events = sortBy(mainJson.events, ['startDateTimeNumber']);
-
   mainJson.events.forEach((event) => {
     // add event.active to valid events (ones that are in range)
     let dateTime = event.date;
@@ -99,7 +96,10 @@ function processEvents() {
 
   // keep only the active items for the template for now
   mainJson.events = mainJson.events.filter((event) => event.active);
-}
+
+  // last minute sort
+  mainJson.events = sortBy(mainJson.events, ['startDateTimeNumber']);
+} // end processEvents
 
 function renderTemplates() {
   let fileNames = [];
