@@ -1,7 +1,7 @@
 (() => {
   const dayjs = window.dayjs;
   const { modules } = window.pv;
-  const { log, url } = window.pv.utils;
+  const { log, url, dom } = window.pv.utils;
 
   let currentDate = dayjs().format('YYYY-MM-DD');
 
@@ -23,9 +23,21 @@
 
   (function main() {
     const setupUiControls = modules.controls.setup;
-    const { collectEventsFromDom } = modules.events;
-    const hideDatesInThePast = () => modules.events.hideDatesInThePast(currentDate);
+    const { collectEventsFromDom, getSearchFromUrl } = modules.events;
 
+    // mark window title for development
+    if (window.location.hostname === 'localhost') {
+      dom.$('title').innerText += ' (dev)';
+    }
+
+    // get search term of url if possible, then remove it from the url with a reload
+    const copiedSearchFromUrl = getSearchFromUrl();
+    if (copiedSearchFromUrl) {
+      url.forceReload('shared');
+      return;
+    }
+
+    const hideDatesInThePast = () => modules.events.hideDatesInThePast(currentDate);
     useUrlDebugOptions();
     collectEventsFromDom();
     hideDatesInThePast();

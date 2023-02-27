@@ -191,6 +191,15 @@ window.pv.modules.events = (() => {
     return events;
   }
 
+  /** Copies the search query from url to local storage, must be used before setting the search up */
+  function getSearchFromUrl() {
+    const params = url.queryString.parse();
+    if (!params.q) return false;
+    const query = params.q.trim().substring(0, 200);
+    storage.save('searchTerm', query);
+    return true;
+  }
+
   return {
     showEvent,
     hideEvent,
@@ -201,5 +210,6 @@ window.pv.modules.events = (() => {
     searchAndFilter,
     hideDatesInThePast,
     collectEventsFromDom,
+    getSearchFromUrl,
   };
 })();
