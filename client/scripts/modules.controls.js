@@ -98,6 +98,16 @@ window.pv.modules.controls = (() => {
     });
   }
 
+  // LOGO ROOT LINK
+  // ==============
+
+  function setupLogoRootLink() {
+    const el = $('.js-home-link');
+    el.addEventListener('click', () => {
+      storage.save('searchTerm', '');
+    });
+  }
+
   // SHARE BUTTON
   // ============
 
@@ -233,6 +243,7 @@ window.pv.modules.controls = (() => {
     setupDateSelector();
     addModalCloseHandler();
     addModalOpener();
+    setupLogoRootLink();
     triggerInputEvent($('.js-search-input'));
   };
 
