@@ -61,7 +61,6 @@ module.exports = function parseEvents(eventsXlsx) {
 
     // create a ticketUrl for ticket
     if (typeof row.ticket === 'string' && row.ticket && row.ticket.includes('/')) {
-      console.log('1>>>', row.ticket);
       if (row.ticket.startsWith('http')) {
         row.ticketUrl = row.ticket;
       } else {
