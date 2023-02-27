@@ -6,6 +6,9 @@ const xlsJsonToRows = require('../utils/xlsx/xlsJsonToRows');
 const log = require('./log');
 const validateCellKeysOrDie = require('../utils/validation/validateCellKeysOrDie');
 const slugify = require('../utils/string/slugify');
+const removeUnknownKeys = require('../utils/object/removeUnknownKeys');
+
+const COLS = ['rowIdx', 'name', 'address', 'fbEventUrl', 'email'];
 
 module.exports = function parsePlaces(workSheet) {
   const fileName = path.join(config.dataDir, 'places.json');
@@ -15,7 +18,8 @@ module.exports = function parsePlaces(workSheet) {
   const slugNames = [];
   const slugAddresses = [];
   rows.forEach((row) => {
-    validateCellKeysOrDie(row, ['name', 'address', 'fbEventUrl', 'email']);
+    validateCellKeysOrDie(row, COLS);
+    removeUnknownKeys(row, COLS);
 
     // name and address should be primary keys
     const slugName = slugify(row.name);

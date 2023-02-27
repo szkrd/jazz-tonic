@@ -5,13 +5,18 @@ const xlsJsonToRows = require('../utils/xlsx/xlsJsonToRows');
 const splitGenreTags = require('../utils/string/splitGenreTags');
 const log = require('./log');
 const validateCellKeysOrDie = require('../utils/validation/validateCellKeysOrDie');
+const removeUnknownKeys = require('../utils/object/removeUnknownKeys');
+
+const COLS = ['rowIdx', 'name', 'genre', 'tags'];
 
 module.exports = function parsePerformers(workSheet) {
   const fileName = path.join(config.dataDir, 'performers.json');
   log.info('Parsing performers...');
   const rows = xlsJsonToRows(workSheet);
   rows.forEach((row) => {
-    validateCellKeysOrDie(row, ['name', 'genre', 'tags']);
+    validateCellKeysOrDie(row, COLS);
+    removeUnknownKeys(row, COLS);
+
     // genre
     if (row.genre) {
       row.genre = row.genre.toLocaleLowerCase(); // trimming was done in the generic parser

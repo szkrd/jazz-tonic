@@ -16,26 +16,28 @@
     <tr>
       <td class="label"><label>helyszín</label></td>
       <td>
-        <%- place.name %>
-        <% if (place.address) { %>
+        <% if (typeof place.name === 'string' && place.name) { %>
+          <%- place.name %>
+        <% } %>
+        <% if (typeof place.address === 'string' && place.address) { %>
          | <a href="https://www.google.com/maps/?q=<%- encodeURIComponent(place.address) %>" target="_blank"><%- place.address %></a>
         <% } %>
-        <% if (place.fbEventUrl) { %>
-         | <a href="<%- place.fbEventUrl %>" target="_blank">facebook</a>
+        <% if (typeof fbEventLink === 'string' || typeof place.fbEventUrl === 'string') { %>
+         | <a href="<%- fbEventLink || place.fbEventUrl %>" target="_blank">facebook</a>
         <% } %>
       </td>
     </tr>
   <% } %>
-  <% if (typeof performer === 'object') { %>
+  <% if (typeof performer === 'object' && typeof performer.name === 'string' && performer.name) { %>
     <tr>
       <td class="label"><label>előadó</label></td>
       <td><%- performer.name %></td>
     </tr>
   <% } %>
-  <% if (ticket) { %>
+  <% if (typeof ticket === 'string' && ticket) { %>
     <tr>
       <td class="label"><label>jegy</label></td>
-      <% if (ticketUrl) { %>
+      <% if (typeof ticketUrl === 'string' && ticketUrl) { %>
         <td class="break-all"><a href="<%- ticketUrl %>" target="_blank"><%- ticket %></a></td>
       <% } else { %>
         <td><%- ticket %></td>
