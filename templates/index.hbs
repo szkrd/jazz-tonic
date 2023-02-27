@@ -14,6 +14,7 @@
     <link rel='stylesheet' href='styles/top.css?r={{fileHashes.client_styles_top_css}}' />
     <link rel='stylesheet' href='styles/events.css?r={{fileHashes.client_styles_events_css}}' />
     <link rel='stylesheet' href='styles/modal.css?r={{fileHashes.client_styles_modal_css}}' />
+    <link rel='stylesheet' href='styles/notifications.css?r={{fileHashes.client_styles_notifications_css}}' />
     <script type='text/javascript'>window.pv = { meta: {{{meta}}}, templates: {}, config: {{{config}}} }</script>
     <script src='scripts/vendor/lodash.4.17.21.min.js'></script>
     <script src='scripts/vendor/dayjs.1.11.7.min.js'></script>
@@ -38,6 +39,13 @@
           <div class='flex-child top-right-buttons'>
             <div class='share-url'>
               <button class='js-share-button' title='share search'>{{{require file='images/share.svg'}}}</button>
+              <div class='share-dialog js-share-dialog' style='display:none'>
+                <label for='share-url-textarea'>A keresés url-je:</label>
+                <textarea id='share-url-textarea' class='js-share-url-textarea' readonly></textarea>
+                <div class='action-buttons'>
+                  <button class='js-copy-url-to-clipboard'>{{{require file='images/clipboard.svg'}}}</button>
+                </div>
+              </div>
             </div>
             <div class='theme-switcher'>
               <button class='js-theme-button-light' title='light theme'>{{{require file='images/sun.svg'}}}</button>

@@ -25,9 +25,10 @@
   --color-modal-cover: #30303050;
   --color-modal-close-icon: #bbbbbb;
   --color-modal-close-icon-hover: #aaaaaa;
-  --color-modal-content-bg: #f5f5f5;
+  --color-modal-content-bg: #f5f5f5; /* + share dialog bg*/
   --color-modal-content-shadow: #30303070;
   --color-modal-label: #888888;
+  --color-share-dialog-border: #dfdfdf;
 
   --color-tag-filter-border: transparent;
   --color-tag-filter-text: #4d4d4d;
@@ -65,4 +66,5 @@ html.theme-dark:root {
   --color-modal-content-bg: #333;
   --color-modal-content-shadow: #000000;
   --color-modal-label: #888888;
+  --color-share-dialog-border: #888888;
 }

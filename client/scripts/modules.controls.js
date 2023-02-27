@@ -4,7 +4,7 @@ window.pv.modules.controls = (() => {
   const _ = window._;
   const { templates, modules } = window.pv;
   const { log, resource, storage, url, date, clipboard } = window.pv.utils;
-  const { $, $$, showEl, hideEl, triggerInputEvent, getBaseUrl } = window.pv.utils.dom;
+  const { $, $$, showEl, hideEl, triggerInputEvent } = window.pv.utils.dom;
 
   // SEARCH FIELD
   // ============
@@ -104,11 +104,30 @@ window.pv.modules.controls = (() => {
   function setupShareButton() {
     const searchInput = $('.js-search-input');
     const button = $('.js-share-button');
+    const dialog = $('.js-share-dialog');
+    const textField = $('textarea', dialog);
+    const copyButton = $('.js-copy-url-to-clipboard');
+    // select all on textarea click
+    textField.addEventListener('click', () => {
+      textField.select();
+    });
+    // copy button
+    copyButton.addEventListener('click', () => {
+      clipboard.copy(textField.value);
+      hideEl(dialog);
+    });
     // on click copy the url with a query param to the clipboard
     button.addEventListener('click', () => {
+      if (dialog.style.display !== 'none') {
+        hideEl(dialog);
+        return;
+      }
       const searchValue = searchInput.value.trim();
-      const newUrl = getBaseUrl() + '?q=' + encodeURIComponent(searchValue);
-      clipboard.copy(newUrl);
+      const newUrl = url.getBaseUrl() + '?q=' + encodeURIComponent(searchValue);
+      showEl(dialog);
+      textField.value = newUrl;
+      textField.focus();
+      textField.select();
     });
     // button should be disabled if there's nothing to copy
     searchInput.addEventListener('input', () => {

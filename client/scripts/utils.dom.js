@@ -6,6 +6,7 @@ window.pv.utils.dom = (() => {
   const $$ = (selector, parent = document) => Array.from(parent.querySelectorAll(selector));
   const showEl = (el) => el.style.removeProperty('display');
   const hideEl = (el) => (el.style.display = 'none');
+  const toggleEl = (el) => (el.style.display === 'none' ? showEl(el) : hideEl(el));
 
   function triggerInputEvent(el) {
     const event = new Event('input', { bubbles: true, cancelable: true });
@@ -26,6 +27,7 @@ window.pv.utils.dom = (() => {
     $$,
     showEl,
     hideEl,
+    toggleEl,
     triggerInputEvent,
     getInnerText,
   };

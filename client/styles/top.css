@@ -51,6 +51,52 @@
   scale: 0.75;
 }
 
+/* SHARE URL */
+
+.share-url {
+  position: relative;
+}
+
+.share-dialog {
+  z-index: 1;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 300px;
+  border: 1px solid var(--color-share-dialog-border);
+  border-radius: 3px;
+  padding: 5px;
+  background-color: var(--color-modal-content-bg);
+  box-shadow: 2px 2px 20px var(--color-modal-content-shadow);
+}
+
+@media screen and (max-width: 440px) {
+  .share-dialog {
+    left: 0;
+    margin-left: -185px;
+  }
+}
+
+.share-dialog label {
+  font-size: 12px;
+  display: block;
+  padding: 0 0 2px;
+}
+
+.share-dialog textarea {
+  height: 100px;
+  width: 100%;
+  font-size: 14px;
+  word-break: break-all;
+  color: var(--color-text);
+}
+
+.share-dialog .action-buttons {
+  margin: 5px 0 0 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
 /* THEME SWITCHER */
 
 .theme-switcher {
