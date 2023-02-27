@@ -17,11 +17,11 @@ if (
 )
   error = 'maximumDateRange must be a dayjs diff array value!';
 
-['templateOutput', 'fakeDate'].forEach((key) => {
+['eventDateFormat', 'fakeDate'].forEach((key) => {
   if (!error && typeof config[key] !== 'string') error = `key "${key}" must be a string!`;
 });
 
-['useFakeDate'].forEach((key) => {
+['minifyHtml', 'useFakeDate'].forEach((key) => {
   if (!error && typeof config[key] !== 'boolean') error = `key "${key}" must be a booelan (true or false)!`;
 });
 

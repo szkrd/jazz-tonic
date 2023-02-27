@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const shelljs = require('shelljs');
 let hbs = require('handlebars');
+const { minify } = require('html-minifier-terser');
 const config = require('./modules/config');
 const log = require('../parser/modules/log');
 const dayjs = require('dayjs');
@@ -115,8 +116,18 @@ function renderTemplates() {
       const docType = '<!DOCTYPE html>'; // someone ate our doctype
       if (!compiled.startsWith(docType)) compiled = `${docType}\n${compiled}`;
       fs.promises.writeFile(path.join(templatesDir, '/templateData.dump'), JSON.stringify(mainJson, null, 2));
-      fs.promises.writeFile(path.join(outDir, '/' + fileName.replace(/\.hbs$/, '.html')), compiled);
-      log.info(`Compiled and saved ${fileName}`);
+
+      const outFileName = fileName.replace(/\.hbs$/, '.html');
+      const saveOp = (text) => fs.promises.writeFile(path.join(outDir, '/' + outFileName), text);
+
+      if (config.minifyHtml) {
+        log.info('Minifying.', { conservativeCollapse: true, collapseWhitespace: true, maxLineLength: 1000 });
+        minify(compiled).then(saveOp);
+      } else {
+        log.info('Not minifying, saving html as is.');
+        saveOp(compiled);
+      }
+      log.info(`Compiled ${fileName} and saved as ${outFileName}`);
     });
   });
 }
