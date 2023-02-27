@@ -37,15 +37,16 @@ Serious errors will break the parser and it will bail out with a non zero exit c
 - uses **templates/index.hbs** which is a [handlebars](https://handlebarsjs.com/guide/#what-is-handlebars) template
 - run it with `npm run renderer` (or `node scripts/renderer`), for dev/watch mode `npm run renderer:watch`
 - run the dummy client server with `npm run serve` and then open the page in the browser
+- if you want to test the page from your network, but a different device, use `npm run serve:public`
 - output of the html file is in **client/index.html**
 - a dump of the used template data can be found in the **templateData.dump**, next to the hbs file
   (which is based on the **main.json** created by the parser)
 
 ### scraper
 
-The scraper is unfinished.
+The scraper is unfinished/abandoned.
 
-1. to use it first copy the `config.template.json` to `config.json` and set the parameters there
+1. to use it first copy the `scraperConfig.template.json` to `scraperConfig.json` and set the parameters there
 2. it can log in, manage the session, open the event cards' page and collect the event urls
 3. it is rather brittle and crawling the event pages themselves would pose further problems
 
@@ -53,3 +54,8 @@ The scraper is unfinished.
 
 1. frontend is purely static
 2. old dates are not displayed; for debugging you can use the location search part: `http://localhost:3000/?currentDate=2023-02-15`
+
+## development
+
+- linter: `npm run lint` (should also happen on pre-commit)
+- formatter: `npm run format`
