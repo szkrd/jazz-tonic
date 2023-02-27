@@ -103,6 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
+# fuck npm, fuck package lock, in 2023
+package-lock.json
+
 delme.txt
 temp.txt
 client/index.html
