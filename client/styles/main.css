@@ -35,6 +35,12 @@ button:focus {
   border-color: var(--color-button-focused-border);
 }
 
+button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale();
+}
+
 input[type='text'],
 input[type='search'] {
   border-radius: 3px;

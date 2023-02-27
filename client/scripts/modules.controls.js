@@ -3,8 +3,8 @@ window.pv.modules = window.pv.modules || {};
 window.pv.modules.controls = (() => {
   const _ = window._;
   const { templates, modules } = window.pv;
-  const { log, resource, storage, url, date } = window.pv.utils;
-  const { $, $$, showEl, hideEl, triggerInputEvent } = window.pv.utils.dom;
+  const { log, resource, storage, url, date, clipboard } = window.pv.utils;
+  const { $, $$, showEl, hideEl, triggerInputEvent, getBaseUrl } = window.pv.utils.dom;
 
   // SEARCH FIELD
   // ============
@@ -95,6 +95,25 @@ window.pv.modules.controls = (() => {
             );
           });
       });
+    });
+  }
+
+  // SHARE BUTTON
+  // ============
+
+  function setupShareButton() {
+    const searchInput = $('.js-search-input');
+    const button = $('.js-share-button');
+    // on click copy the url with a query param to the clipboard
+    button.addEventListener('click', () => {
+      const searchValue = searchInput.value.trim();
+      const newUrl = getBaseUrl() + '?q=' + encodeURIComponent(searchValue);
+      clipboard.copy(newUrl);
+    });
+    // button should be disabled if there's nothing to copy
+    searchInput.addEventListener('input', () => {
+      const hasValue = searchInput.value.trim() !== '';
+      button.disabled = !hasValue;
     });
   }
 
@@ -189,6 +208,7 @@ window.pv.modules.controls = (() => {
 
   const setupControls = () => {
     setupSearchField();
+    setupShareButton();
     setupThemeSwitcher();
     setupTagSelector();
     setupDateSelector();

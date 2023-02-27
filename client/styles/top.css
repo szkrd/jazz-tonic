@@ -17,10 +17,38 @@
   line-height: 40px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 642px) {
   .top-controls .search-input {
-    width: calc(100vw - 89px);
+    width: calc(100vw - 131px);
   }
+}
+
+@media screen and (max-width: 450px) {
+  .top-controls .top-controls-flex-row {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .top-controls .search-input {
+    width: calc(100vw - 10px);
+  }
+}
+
+/* TOP RIGHT BUTTONS (SHARE, THEME) */
+
+.top-right-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.top-right-buttons button {
+  display: block;
+  height: 28px;
+}
+
+.top-right-buttons button svg {
+  scale: 0.75;
 }
 
 /* THEME SWITCHER */
@@ -30,14 +58,8 @@
 }
 
 .theme-switcher button {
-  display: block;
   border-radius: 0;
-  height: 28px;
   width: 38px;
-}
-
-.theme-switcher button svg {
-  scale: 0.75;
 }
 
 .theme-switcher button.selected {

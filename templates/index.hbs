@@ -24,6 +24,7 @@
     <script src='scripts/utils.i18n.js?r={{fileHashes.client_scripts_utils_i18n_js}}'></script>
     <script src='scripts/utils.resource.js?r={{fileHashes.client_scripts_utils_resource_js}}'></script>
     <script src='scripts/utils.date.js?r={{fileHashes.client_scripts_utils_date_js}}'></script>
+    <script src='scripts/utils.clipboard.js?r={{fileHashes.client_scripts_utils_clipboard_js}}'></script>
     <script src='scripts/modules.events.js?r={{fileHashes.client_scripts_modules_events_js}}'></script>
     <script src='scripts/modules.controls.js?r={{fileHashes.client_scripts_modules_controls_js}}'></script>
   </head>
@@ -34,10 +35,13 @@
           <div class='flex-child'>
             <input placeholder='kereső' type='text' class='search-input js-search-input' style='display:none' />
           </div>
-          <div class='flex-child'>
+          <div class='flex-child top-right-buttons'>
+            <div class='share-url'>
+              <button class='js-share-button' title='share search'>{{{require file='images/share.svg'}}}</button>
+            </div>
             <div class='theme-switcher'>
-              <button class='js-theme-button-light'>{{{require file='images/sun.svg'}}}</button>
-              <button class='js-theme-button-dark'>{{{require file='images/moon.svg'}}}</button>
+              <button class='js-theme-button-light' title='light theme'>{{{require file='images/sun.svg'}}}</button>
+              <button class='js-theme-button-dark' title='dark theme'>{{{require file='images/moon.svg'}}}</button>
             </div>
           </div>
         </div>

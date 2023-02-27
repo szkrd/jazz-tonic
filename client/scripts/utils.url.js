@@ -20,13 +20,16 @@ window.pv.utils.url = (() => {
     return params.toString();
   }
 
+  function getBaseUrl() {
+    return window.location.protocol + '//' + window.location.host + window.location.pathname;
+  }
+
   function forceReload(reason = 'expired') {
-    let newUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
-    newUrl += `?r=${Date.now()}-${reason}`;
+    const newUrl = getBaseUrl() + `?r=${Date.now()}-${reason}`;
     window.location.href = newUrl;
   }
 
   const queryString = { from, parse };
 
-  return { queryString, forceReload };
+  return { queryString, forceReload, getBaseUrl };
 })();
