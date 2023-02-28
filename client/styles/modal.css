@@ -1,6 +1,7 @@
 /* EVENT DETAILS MODAL */
 
 .modal {
+  z-index: 4;
   display: none;
   position: fixed;
   top: 0;

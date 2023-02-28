@@ -42,6 +42,7 @@ html.theme-dark:root {
   --color-text: #e0e0e0;
   --color-link: #51a3f4;
   --color-link-visited: #758a9e;
+  --color-dark-logo-shadow: #000;
   --color-button-border: #888888;
   --color-button-focused-border: #e0e0e0;
   --color-button-selected-shadow: #e0e0e0;

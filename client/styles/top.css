@@ -19,6 +19,10 @@
   height: 36px;
 }
 
+html.theme-dark .top-controls .logo {
+  filter: drop-shadow(2px 2px var(--color-dark-logo-shadow));
+}
+
 .top-controls .search-input-wrapper {
   flex-grow: 1;
 }
