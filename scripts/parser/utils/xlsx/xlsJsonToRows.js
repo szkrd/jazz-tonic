@@ -49,6 +49,10 @@ module.exports = function xlsJsonToRows(workSheet, debug = false) {
 
       // finally we can deal with a simple column
       const newKey = camelCase(oKey).trim().replace(/\s+/g, ' '); // camelize keys
+      if (newKey in obj)
+        log.die(
+          'There seem to be multiple columns with the same name pattern (in row 1)!\n' + `"${oKey}" / "${newKey}"`
+        );
       obj[newKey] = val;
     });
     ret.push(obj);

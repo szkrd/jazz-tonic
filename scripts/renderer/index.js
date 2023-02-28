@@ -88,6 +88,12 @@ function processEvents() {
     event.startDateTime = dateTime;
     event.startDateTimeNumber = dayjs(dateTime).toDate() * 1;
     event.startDateTimeFormatted = dayjs(dateTime).locale('hu').format(config.eventDateFormat);
+
+    // fix broken (?) dates where we have no start time at all
+    if ((dateTime || '').match(/^\d{4}-\d{2}-\d{2}$/)) {
+      event.startDateTimeFormatted = dayjs(dateTime).locale('hu').format(config.eventDateNoTimeFormat);
+    }
+
     delete event.description; // we need only the descriptionHtml!
 
     // add relative data location (where the current event's js will be saved)

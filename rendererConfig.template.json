@@ -3,5 +3,6 @@
   "maximumDateRange": [2, "month"],
   "useFakeDate": false,
   "fakeDate": "2023-02-13",
-  "eventDateFormat": "MMM D, HH:mm"
+  "eventDateFormat": "MMM D, HH:mm",
+  "eventDateNoTimeFormat": "MMM D"
 }
