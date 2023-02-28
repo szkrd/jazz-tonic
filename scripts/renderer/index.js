@@ -64,6 +64,8 @@ function processEvents() {
 
   // add release id and file hashes for cache busting
   mainJson.releaseId = Date.now();
+  mainJson.buildDate = dayjs().format('YYYY-MM-DDTHH:mm:ss'); // local date
+  mainJson.buildBy = process.env.username || process.env.USER || 'unknown';
   mainJson.fileHashes = {};
   const clientJsFiles = Array.from(shelljs.ls(outDir + '/scripts/**/*.js')).concat(
     shelljs.ls(outDir + '/styles/**/*.css')
@@ -75,7 +77,10 @@ function processEvents() {
   });
 
   // global metadata (already stringified)
-  mainJson.meta = JSON.stringify({ releaseId: mainJson.releaseId });
+  mainJson.meta = JSON.stringify({
+    releaseId: mainJson.releaseId,
+    build: { date: mainJson.buildDate, user: mainJson.buildBy },
+  });
 
   mainJson.events.forEach((event) => {
     // add event.active to valid events (ones that are in range)
