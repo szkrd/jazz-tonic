@@ -110,6 +110,7 @@ delme.txt
 temp.txt
 client/index.html
 client/data-*/*.js
+client/data-*/*.html
 data/*.json
 data/*.xlsx
 output.txt

@@ -41,7 +41,8 @@
 }
 
 .events-table-row .event-name-link {
-  color: var(--color-events-event-name-link);
+  color: var(--color-text);
+  text-decoration: none;
 }
 
 .events-table-row .event-name {

@@ -1,0 +1,54 @@
+html,
+body.event-subpage {
+  height: 100%;
+}
+
+.event-subpage {
+  border-radius: 5px;
+  padding: 0 20px;
+}
+
+.event-subpage h1 img {
+  height: 80px;
+}
+
+.event-subpage h2 {
+  font-weight: 100;
+  margin: 0 0 20px 0;
+  font-size: 35px;
+}
+
+.event-subpage .fake-modal {
+  display: block;
+  background-color: var(--color-fake-modal-content-bg);
+  position: static;
+  padding: 10px;
+  min-height: 100%;
+  border-radius: 5px;
+}
+
+.event-subpage .fake-modal .modal-content {
+  position: static;
+  max-width: 100%;
+  max-height: none;
+  background-color: transparent;
+  display: block;
+  margin: 0;
+}
+
+.event-subpage .modal .modal-content td {
+  padding-bottom: 10px;
+}
+
+.event-subpage .event-details-row-tag,
+.event-subpage .event-details-row-name {
+  display: none;
+}
+
+.event-subpage .genre-or-tag {
+  border: 1px solid var(--color-text);
+}
+
+.event-subpage .genre-or-tag.tag {
+  background-color: transparent;
+}

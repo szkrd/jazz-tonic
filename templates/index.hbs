@@ -100,9 +100,10 @@
               class='events-table-row js-event js-clickable-row {{showif this.soldOut "sold-out"}}'
               tabindex='0'
             >
-              <a href='./{{this.dataUri}}' class='js-event-name js-event-details-opener hidden'>{{this.name}}</a>
               <div class='event-name'>
-                <span>{{this.name}}</span>
+                <a href='./{{this.dataUriForHtml}}' class='js-event-name js-event-details-opener event-name-link'>
+                  {{this.name}}
+                </a>
               </div>
               <div class='event-merged-section'>
                 <div class='event-genres-tags event-merge-section-col js-event-genres-tags-merged'>

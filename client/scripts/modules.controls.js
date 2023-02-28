@@ -2,7 +2,7 @@ window.pv = window.pv || {};
 window.pv.modules = window.pv.modules || {};
 window.pv.modules.controls = (() => {
   const _ = window._;
-  const { templates, modules } = window.pv;
+  const { templates, modules, meta } = window.pv;
   const { log, resource, storage, url, date, clipboard } = window.pv.utils;
   const { $, $$, showEl, hideEl, triggerInputEvent } = window.pv.utils.dom;
 
@@ -63,16 +63,22 @@ window.pv.modules.controls = (() => {
   function addModalOpener() {
     $$('.js-event-details-opener').forEach((el) => {
       const eventContainer = el.closest('.js-clickable-row');
+      // click on the link itself
+      el.addEventListener('click', (linkClickEvt) => {
+        linkClickEvt.preventDefault();
+      });
+      // enter press on the container
       eventContainer.addEventListener('keyup', (keyEvt) => {
         if (keyEvt.key === 'Enter') eventContainer.click();
       });
+      // click on the container (the event row)
       eventContainer.addEventListener('click', (clickEvt) => {
         clickEvt.preventDefault();
         clickEvt.stopPropagation();
         document.activeElement.blur();
         const eventId = parseInt(clickEvt.currentTarget.getAttribute('id').replace(/^event-/, ''), 10);
         const el = $('.js-event-details-opener', clickEvt.currentTarget);
-        const href = el.getAttribute('href');
+        const href = el.getAttribute('href').replace(/\.html$/, `.js?r=${meta.releaseId}`);
         showModal();
         resource.download
           .js(href)

@@ -9,7 +9,7 @@ const dayjs = require('dayjs');
 require('dayjs/locale/hu');
 const chalk = require('chalk');
 const { mkdir } = require('shelljs');
-const { sortBy } = require('lodash');
+const { sortBy, template } = require('lodash');
 
 log.banner('rendering');
 
@@ -26,13 +26,24 @@ const rootDir = '.'; // use process argv 1?
 const templatesDir = path.join(rootDir, '/templates');
 const outDir = path.join(rootDir, '/client');
 
+// HANDLEBARS HELPERS
+// ==================
+
 hbs.registerHelper('showif', (bool, val) => {
   return val && bool ? String(val) : '';
 });
 
+let __templateCache = {};
 hbs.registerHelper('templatize', (options) => {
-  let text = fs.readFileSync(path.join(templatesDir, options.hash.file + '.tpl'), 'utf-8');
-  text = text.replace(/<!--.*?-->/g, '');
+  const name = options.hash.file;
+  let text = __templateCache[name] || fs.readFileSync(path.join(templatesDir, name + '.tpl'), 'utf-8');
+  __templateCache[name] = text;
+  const marker = { begin: '<!--INNER_CONTENT_BEGIN-->', end: '<!--INNER_CONTENT_END-->' };
+  const markerPos = { begin: text.indexOf(marker.begin), end: text.indexOf(marker.end) };
+  if (markerPos.begin > -1 && markerPos.end > -1) {
+    text = text.substring(markerPos.begin + marker.begin.length, markerPos.end);
+  }
+  text = text.replace(/<!--.*?-->/g, '').trim();
   return [
     '<script type="text/javascript">',
     'window.pv.templates.modal=_.template(' + JSON.stringify(text) + ');',
@@ -48,6 +59,9 @@ hbs.registerHelper('require', (options) => {
   __includeMap[fn] = text;
   return text;
 });
+
+// MODULES
+// =======
 
 function processEvents() {
   const baseDate = config.useFakeDate ? config.fakeDate : dayjs().format('YYYY-MM-DD');
@@ -82,6 +96,14 @@ function processEvents() {
     build: { date: mainJson.buildDate, user: mainJson.buildBy },
   });
 
+  // create lodash template from the modal window so that we can save it as an html as well
+  let subPageText = fs.readFileSync(path.join(templatesDir, 'modal.tpl'), 'utf-8');
+  subPageText = subPageText
+    .replace(/<!--.*?-->/g, '')
+    .replace(/\n+/g, '\n')
+    .trim();
+  const subPageTpl = template(subPageText);
+
   mainJson.events.forEach((event) => {
     // add event.active to valid events (ones that are in range)
     let dateTime = event.date;
@@ -103,8 +125,15 @@ function processEvents() {
 
     // add relative data location (where the current event's js will be saved)
     event.dataUri = `${dataUri}/event-${event.rowIdx}.js?r=${mainJson.releaseId}`.replace(/^\//, '');
-    const eventDataFileName = path.join(currentDataDir, `/event-${event.rowIdx}.js`);
-    fs.promises.writeFile(eventDataFileName, 'window.pv.addEvent(' + JSON.stringify(event) + ')', 'utf-8');
+    event.dataUriForHtml = event.dataUri.replace(/\.js.*/, '.html');
+    const eventDataFileName = path.join(currentDataDir, `/event-${event.rowIdx}`);
+    fs.promises.writeFile(eventDataFileName + '.js', 'window.pv.addEvent(' + JSON.stringify(event) + ')', 'utf-8');
+
+    // we always minify the modal, it's kinda messy without that,
+    // but the whitespace collapse would make it much harder to debug that
+    minify(subPageTpl({ ...event, subPage: true }), { collapseWhitespace: config.minifyHtml }).then((text) =>
+      fs.promises.writeFile(eventDataFileName + '.html', text, 'utf-8')
+    );
   });
 
   // keep only the active items for the template for now
@@ -143,6 +172,9 @@ function renderTemplates() {
     });
   });
 }
+
+// MAIN
+// ====
 
 function main() {
   processEvents();
