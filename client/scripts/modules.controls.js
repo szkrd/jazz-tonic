@@ -54,6 +54,7 @@ window.pv.modules.controls = (() => {
     document.addEventListener('keyup', (keyEvt) => {
       if (keyEvt.key === 'Escape') hideModal();
     });
+    $('.js-modal-cover-layer').addEventListener('click', hideModal);
   }
 
   /**
