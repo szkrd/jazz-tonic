@@ -17,5 +17,20 @@ module.exports = function textToHtml(text = '') {
   // where in reality this should look like this:
   // "Sramkó János dob\nhttps://www.facebook.com/100063655596766/videos/1157545177979537/\nBelépő/Entrance fee"
   // text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+
+  // bold/italic for important things
+  text = text.replace(/(\s)(FONTOS\s?:)(\s)/g, '$1<b>$2</b>$3');
+  text = text.replace(/(–* ENGLISH –*)/g, '<i>$1</i>');
+
+  // some really conservative link schemes
+  // be careful not to replace an already replaced part!
+  // more detailed must follow less detailed!
+  // const linkify = (text) => `<a href="${text}" rel="nofollow" target="_blank">${text}</a>`;
+  // text = text.replace(/(https?:\/\/www.youtube.com\/[@a-zA-Z0-9_]+)/g, linkify('$1'));
+  // text = text.replace(/(https?:\/\/youtube.com\/watch\?v=[a-zA-Z0-9_]+)/g, linkify('$1'));
+  // text = text.replace(/(https?:\/\/www.youtube.com\/watch\?v=[a-zA-Z0-9_]+)/g, linkify('$1'));
+  // text = text.replace(/(https?:\/\/www.facebook.com\/[a-zA-Z-.]+)/g, linkify('$1'));
+  // text = text.replace(/(https?:\/\/www.instagram.com\/[a-zA-Z-.]+)/g, linkify('$1'));
+
   return text;
 };
