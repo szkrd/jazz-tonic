@@ -22,6 +22,15 @@ window.pv.utils.dom = (() => {
     return el.innerText.trim();
   }
 
+  function escapeHtml(text = '') {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
   return {
     $,
     $$,
@@ -30,5 +39,6 @@ window.pv.utils.dom = (() => {
     toggleEl,
     triggerInputEvent,
     getInnerText,
+    escapeHtml,
   };
 })();

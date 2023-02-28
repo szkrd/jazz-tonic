@@ -7,6 +7,7 @@ const log = require('./log');
 const validateCellKeysOrDie = require('../utils/validation/validateCellKeysOrDie');
 const normalizeEventDate = require('../utils/date/normalizeEventDate');
 const removeUnknownKeys = require('../utils/object/removeUnknownKeys');
+const textToHtml = require('../utils/html/textToHtml');
 
 const COLS = [
   'rowIdx',
@@ -69,10 +70,11 @@ module.exports = function parseEvents(eventsXlsx) {
       }
     }
 
-    // clean up description a bit
+    // clean up description a bit and htmlize
     if (typeof row.description === 'string' && row.description) {
       row.description = row.description.replace(/\s?see less/gi, '');
     }
+    row.descriptionHtml = textToHtml(row.description);
 
     // collect tags into an array proper
     row.tags = splitGenreTags(row.tags);

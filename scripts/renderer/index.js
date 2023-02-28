@@ -88,6 +88,7 @@ function processEvents() {
     event.startDateTime = dateTime;
     event.startDateTimeNumber = dayjs(dateTime).toDate() * 1;
     event.startDateTimeFormatted = dayjs(dateTime).locale('hu').format(config.eventDateFormat);
+    delete event.description; // we need only the descriptionHtml!
 
     // add relative data location (where the current event's js will be saved)
     event.dataUri = `${dataUri}/event-${event.rowIdx}.js?r=${mainJson.releaseId}`.replace(/^\//, '');

@@ -111,6 +111,5 @@ body.show-modal .modal {
 }
 
 .modal .modal-content .value-description-inner {
-  white-space: pre-wrap;
-  word-break: break-all;
+  overflow: hidden;
 }

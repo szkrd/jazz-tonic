@@ -47,7 +47,7 @@
   <tr>
     <td class="label"><label>leírás</label></td>
     <td class="value-description">
-      <div class="value-description-inner"><%- description %></div>
+      <div class="value-description-inner"><%= descriptionHtml %></div>
     </td>
 </tr>
 </table>
