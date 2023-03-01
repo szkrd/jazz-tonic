@@ -32,3 +32,10 @@
 .page-footer .contact-list li:last-of-type {
   margin-bottom: 0;
 }
+
+@media screen and (max-width: 450px) {
+  .page-footer .contact-list li {
+    flex-direction: column;
+    gap: 2px;
+  }
+}

@@ -1,11 +1,34 @@
+.event-subpage h1 {
+  max-width: 100vw;
+  overflow: hidden;
+}
+
 .event-subpage h1 img {
-  height: 80px;
+  max-height: 80px;
+}
+
+@media screen and (max-width: 800px) {
+  .event-subpage h1 {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .event-subpage h1 img {
+    width: calc(100% - 20px);
+  }
 }
 
 .event-subpage h2 {
   font-weight: 100;
   margin: 0 0 20px 0;
   font-size: 35px;
+}
+
+@media screen and (max-width: 450px) {
+  .event-subpage h2 {
+    font-size: 20px;
+  }
 }
 
 .event-subpage .fake-modal {

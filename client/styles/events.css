@@ -21,6 +21,7 @@
   cursor: pointer;
   font-size: 13px;
   font-weight: 100;
+  max-width: calc(100vw - 10px);
 }
 
 .events-table-row:focus,
@@ -38,6 +39,16 @@
 .events-table-row .event-merged-section {
   display: flex;
   padding: 8px 0 0;
+}
+
+@media screen and (max-width: 330px) {
+  .events-table-row .event-merged-section {
+    flex-direction: column;
+    gap: 5px;
+  }
+  body .events-table-row .event-merged-section > .event-merge-section-col:not(:first-of-type) {
+    padding-left: 0;
+  }
 }
 
 .events-table-row .event-name-link {

@@ -26,12 +26,8 @@
         </div>
       </div>
       <div class='theme-switcher'>
-        <button class='js-theme-button-light' title='light theme' aria-label='select light theme'>
-          <%= helpers.includeSvg('sun') %>
-        </button>
-        <button class='js-theme-button-dark' title='dark theme' aria-label='select dark theme'>
-          <%= helpers.includeSvg('moon') %>
-        </button>
+        <button class='js-theme-button-light' title='light theme' aria-label='select light theme'><%= helpers.includeSvg('sun') %></button>
+        <button class='js-theme-button-dark' title='dark theme' aria-label='select dark theme'><%= helpers.includeSvg('moon') %></button>
       </div>
     </div>
   </div>

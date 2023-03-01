@@ -71,6 +71,8 @@ html.theme-dark .top-controls .logo {
 .top-right-buttons button {
   display: block;
   height: 28px;
+  font-size: 0;
+  min-width: 34px;
 }
 
 .top-right-buttons button svg {
@@ -132,6 +134,8 @@ html.theme-dark .top-controls .logo {
 .theme-switcher button {
   border-radius: 0;
   width: 38px;
+  padding: 0;
+  font-size: 0; /* ios safari minimum button width */
 }
 
 .theme-switcher button.selected {

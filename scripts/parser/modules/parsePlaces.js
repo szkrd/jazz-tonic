@@ -29,7 +29,7 @@ module.exports = function parsePlaces(workSheet) {
 
     if (!isValidAddress(row.address)) {
       invalidAddressCount++;
-      log.warning(`Invalid street address at row (${row.rowIdx}, ${row.name})`);
+      log.warning(`Invalid street address at row #${row.rowIdx} (place name is "${row.name}")`);
     }
   });
   fs.writeFileSync(fileName, JSON.stringify(rows, null, 2), 'utf-8');

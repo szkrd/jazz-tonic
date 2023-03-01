@@ -25,19 +25,19 @@
 <!-- do NOT use partial include here, this section must remain raw and unrendered for the "templatize" helper! -->
 <!-- do NOT rename, move or modify the content markers (the ones ending in BEGIN and END)! -->
 <!--INNER_CONTENT_BEGIN-->
-<table>
-  <tr class="event-details-row-name">
-    <td class="label"><label>esemény</label></td>
-    <td><h2><%- name %></h2></td>
-  </tr>
-  <tr class="event-details-row-tag">
-    <td class="label"><label>stílus</label></td>
-    <td><div class="tags js-tags-copy-target"></div></td>
-  </tr>
+<div class="event-modal-table table">
+  <div class="event-details-row-name row">
+    <div class="label cell cell-left"><label>esemény</label></div>
+    <div class="cell cell-right"><h2><%- name %></h2></div>
+  </div>
+  <div class="event-details-row-tag row">
+    <div class="label cell cell-left"><label>stílus</label></div>
+    <div class="cell cell-right"><div class="tags js-tags-copy-target"></div></div>
+  </div>
   <% if (typeof subPage === 'boolean' && subPage) { %>
-    <tr class="event-details-row-tag-static">
-      <td class="label"><label>stílus</label></td>
-      <td>
+    <div class="event-details-row-tag-static row">
+      <div class="label cell cell-left"><label>stílus</label></div>
+      <div class="cell cell-right">
         <div class='event-genres-tags tags'>
           <% if (genre) { %>
             <span class='genre genre-or-tag' data-value='<%- genre %>'><%- genre %></span>
@@ -48,17 +48,17 @@
             <% }) %>
           <% } %>
         </div>
-      </td>
-    </tr>
+      </div>
+    </div>
   <% } %>
-  <tr class="event-details-row-date">
-    <td class="label"><label>kezdés</label></td>
-    <td><%- startDateTimeFormatted %></td>
-  </tr>
+  <div class="event-details-row-date row">
+    <div class="label cell cell-left"><label>kezdés</label></div>
+    <div class="cell cell-right"><%- startDateTimeFormatted %></div>
+  </div>
   <% if (typeof place === 'object') { %>
-    <tr class="event-details-row-place">
-      <td class="label"><label>helyszín</label></td>
-      <td>
+    <div class="event-details-row-place row">
+      <div class="label cell cell-left"><label>helyszín</label></div>
+      <div class="cell cell-right">
         <% if (typeof place.name === 'string' && place.name) { %>
           <%- place.name %>
         <% } %>
@@ -68,32 +68,32 @@
         <% if (typeof fbEventLink === 'string' || typeof place.fbEventUrl === 'string') { %>
          | <a href="<%- fbEventLink || place.fbEventUrl %>" target="_blank">facebook</a>
         <% } %>
-      </td>
-    </tr>
+      </div>
+    </div>
   <% } %>
   <% if (typeof performer === 'object' && typeof performer.name === 'string' && performer.name) { %>
-    <tr class="event-details-row-performer">
-      <td class="label"><label>előadó</label></td>
-      <td><%- performer.name %></td>
-    </tr>
+    <div class="event-details-row-performer row">
+      <div class="label cell cell-left"><label>előadó</label></div>
+      <div class="cell cell-right"><%- performer.name %></div>
+    </div>
   <% } %>
   <% if (typeof ticket === 'string' && ticket) { %>
-    <tr class="event-details-row-ticket">
-      <td class="label"><label>jegy</label></td>
+    <div class="event-details-row-ticket row">
+      <div class="label cell cell-left"><label>jegy</label></div>
       <% if (typeof ticketUrl === 'string' && ticketUrl) { %>
-        <td class="break-all"><a href="<%- ticketUrl %>" target="_blank"><%- ticket %></a></td>
+        <div class="break-all cell cell-right"><a href="<%- ticketUrl %>" target="_blank"><%- ticket %></a></div>
       <% } else { %>
-        <td><%- ticket %></td>
+        <div class="cell cell-right"><%- ticket %></div>
       <% } %>
-    </tr>
+    </div>
   <% } %>
-  <tr class="event-details-row-description">
-    <td class="label"><label>leírás</label></td>
-    <td class="value-description">
+  <div class="event-details-row-description row last">
+    <div class="label cell cell-left"><label>leírás</label></div>
+    <div class="value-description cell cell-right">
       <div class="value-description-inner"><%= descriptionHtml %></div>
-    </td>
-</tr>
-</table>
+    </div>
+  </div>
+</div>
 <!--INNER_CONTENT_END-->
       </div>
     </div>

@@ -89,28 +89,60 @@ body.show-modal .modal {
   padding: 0;
 }
 
-.modal .modal-content td {
+.modal .modal-content .cell {
   padding-bottom: 5px;
 }
 
-.modal .modal-content td.break-all {
+.modal .modal-content .break-all {
   word-break: break-all;
 }
 
-.modal .modal-content td.label {
+.modal .modal-content .label {
   color: var(--color-modal-label);
   vertical-align: top;
 }
 
-.modal .modal-content td.label > label {
+.modal .modal-content .label > label {
   display: inline-block;
   padding-right: 10px;
 }
 
-.modal .modal-content tr:first-of-type td.label > label {
+.modal .modal-content .row:first-of-type .label > label {
   margin-top: 3px;
 }
 
-.modal .modal-content .value-description-inner {
-  overflow: hidden;
+/* TABLE TO FLEX */
+
+.event-modal-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-modal-table .row {
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.event-modal-table .row.last {
+  padding-bottom: 0;
+}
+
+.event-modal-table .row .cell-left {
+  width: 90px;
+  min-width: 90px;
+}
+
+@media screen and (max-width: 400px) {
+  .event-modal-table .row {
+    flex-direction: column;
+    padding-bottom: 0;
+  }
+
+  .event-modal-table .row .cell-right {
+    padding-bottom: 10px;
+  }
+
+  .event-modal-table .row.last .cell-right {
+    padding-bottom: 0;
+  }
 }
