@@ -10,7 +10,11 @@ window.pv.utils.storage = (() => {
     // since rowIdx is not stable between builds
   };
 
+  // saving the searchterm can be considered annoying, so let's skip that for now
+  const DISABLED_KEYS = ['searchTerm'];
+
   function save(key, value) {
+    if (DISABLED_KEYS.includes(key)) return;
     if (key) {
       values[key] = value;
     }
@@ -22,6 +26,7 @@ window.pv.utils.storage = (() => {
   }
 
   function load(key) {
+    if (DISABLED_KEYS.includes(key)) return null;
     let storedValues = values;
     try {
       storedValues = JSON.parse(localStorage.getItem('pv') || 'null') || storedValues;
