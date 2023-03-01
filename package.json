@@ -12,7 +12,7 @@
     "parser": "node ./scripts/parser",
     "renderer": "node ./scripts/renderer",
     "start": "node ./scripts/parser && node ./scripts/renderer",
-    "renderer:watch": "nodemon --ext hbs,tpl,json,js --watch templates --watch data --watch scripts/renderer ./scripts/renderer",
+    "renderer:watch": "nodemon --ext tpl,json,js --watch templates --watch data --watch scripts/renderer ./scripts/renderer",
     "serve": "serve client",
     "serve:public": "serve -l tcp://0.0.0.0:3030 client",
     "markAsStable": "git tag --force stable && git push --tags"
@@ -33,7 +33,6 @@
   "dependencies": {
     "chalk": "4.1.2",
     "dayjs": "1.11.7",
-    "handlebars": "4.7.7",
     "html-minifier-terser": "7.1.0",
     "jest": "29.4.2",
     "lodash": "4.17.21",

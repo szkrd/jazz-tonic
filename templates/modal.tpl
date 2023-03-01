@@ -1,24 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pesti Vibe - <%- name %></title>
-  <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
-  <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
-  <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
-  <link rel='manifest' href='/site.webmanifest' />
-  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  <meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
-  <meta http-equiv='Pragma' content='no-cache' />
-  <meta http-equiv='Expires' content='0' />
+  <%== "partials/commonHead" %>
   <link rel='stylesheet' href='../styles/normalize.css' />
   <link rel='stylesheet' href='../styles/variables.css' />
   <link rel='stylesheet' href='../styles/main.css' />
   <link rel='stylesheet' href='../styles/modal.css' />
   <link rel='stylesheet' href='../styles/events.css' />
+  <link rel='stylesheet' href='../styles/footer.css' />
   <link rel='stylesheet' href='../styles/subpage.css' />
 </head>
 <body class="event-subpage">
@@ -31,8 +21,10 @@
     <div class="fake-modal modal">
       <h2><%- name %></h2>
       <div class="modal-content">
+<!-- this is a lodash template and CAN BE rendered on the client (https://lodash.com/docs/4.17.15#template) -->
+<!-- do NOT use partial include here, this section must remain raw and unrendered for the "templatize" helper! -->
+<!-- do NOT rename, move or modify the content markers (the ones ending in BEGIN and END)! -->
 <!--INNER_CONTENT_BEGIN-->
-<!-- this is a lodash template and is rendered fully on the client (https://lodash.com/docs/4.17.15#template) -->
 <table>
   <tr class="event-details-row-name">
     <td class="label"><label>esemény</label></td>
@@ -106,5 +98,6 @@
       </div>
     </div>
   </div>
+  <%== "partials/footer" %>
 </body>
 </html>

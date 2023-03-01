@@ -1,6 +1,9 @@
 body {
   font-size: 16px;
   background-color: var(--color-body-bg);
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 body,
@@ -67,8 +70,9 @@ body.show-modal {
 }
 
 .page-content {
-  max-width: 1200px;
+  max-width: var(--value-page-max-width);
   margin: 0 auto;
+  flex-grow: 1;
 }
 
 /* SCROLLBARS */

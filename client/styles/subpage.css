@@ -1,13 +1,3 @@
-html,
-body.event-subpage {
-  height: 100%;
-}
-
-.event-subpage {
-  border-radius: 5px;
-  padding: 0 20px;
-}
-
 .event-subpage h1 img {
   height: 80px;
 }
@@ -23,6 +13,7 @@ body.event-subpage {
   background-color: var(--color-fake-modal-content-bg);
   position: static;
   padding: 10px;
+  margin-bottom: 30px;
   min-height: 100%;
   border-radius: 5px;
 }
