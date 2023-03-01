@@ -1,8 +1,10 @@
 /**
  * Convert local characters to their fallback ascii counterpart.
+ * (this can be used for slugification, but not for a band's name for example, since that is a pronoun)
  */
 module.exports = function removeAccents(text = '') {
   return text
+    .replaceAll('ı', 'i') // lower dotless I (there's no upper), used in Azerbaijani, Crimean Tatar, Gagauz, Kazakh, Tatar, Turkish
     .replaceAll('ć', 'c')
     .replaceAll('č', 'c')
     .replaceAll('ñ', 'n')

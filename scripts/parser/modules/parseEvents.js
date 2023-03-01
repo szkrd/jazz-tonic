@@ -29,6 +29,7 @@ module.exports = function parseEvents(eventsXlsx) {
   const fileName = path.join(config.dataDir, 'events.json');
   log.info('Parsing events...');
   const rows = xlsJsonToRows(eventsXlsx);
+  const invalidTime = [];
   rows.forEach((row) => {
     validateCellKeysOrDie(row, COLS);
     removeUnknownKeys(row, COLS);
@@ -56,6 +57,17 @@ module.exports = function parseEvents(eventsXlsx) {
       row.date = normalizeEventDate(row.date);
     }
 
+    // let's ignore utc offsets, we really should be parsing in our own timezone
+    const timePattern = /(\d{2}:\d{2})/;
+    if (row.startTime) {
+      if (!timePattern.test(row.startTime)) {
+        invalidTime.push({ rowIdx: row.rowIdx, startTime: row.startTime });
+      } else {
+        const matcher = row.startTime.match(timePattern);
+        if (matcher) row.startTime = matcher[1];
+      }
+    }
+
     if (row.genre) {
       row.genre = row.genre.toLocaleLowerCase();
     }
@@ -79,6 +91,7 @@ module.exports = function parseEvents(eventsXlsx) {
     // collect tags into an array proper
     row.tags = splitGenreTags(row.tags);
   });
+  if (invalidTime) log.infoBuffer('Some of the startTime values were invalid.', { invalidTime });
   fs.writeFileSync(fileName, JSON.stringify(rows, null, 2), 'utf-8');
   log.success(`Parsing events done.\nProcessed ${rows.length} rows.`);
   return rows;
