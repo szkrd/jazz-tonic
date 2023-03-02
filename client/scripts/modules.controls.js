@@ -242,6 +242,21 @@ window.pv.modules.controls = (() => {
     $$('.js-mod-date').forEach((el) => el.addEventListener('click', changeDate));
   }
 
+  // SCROLL TO TOP
+  // =============
+
+  function setupScrollToTopButton() {
+    const el = $('.js-scroll-top');
+    el.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    const onScroll = _.throttle(() => {
+      const scrollUpVisible = window.scrollY > window.innerHeight / 2;
+      el.classList.toggle('scroll-top-visible', scrollUpVisible);
+    }, 500);
+    document.addEventListener('scroll', onScroll);
+  }
+
   const setupControls = () => {
     setupSearchField();
     setupShareButton();
@@ -251,6 +266,7 @@ window.pv.modules.controls = (() => {
     addModalCloseHandler();
     addModalOpener();
     setupLogoRootLink();
+    setupScrollToTopButton();
     triggerInputEvent($('.js-search-input'));
   };
 

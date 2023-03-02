@@ -29,6 +29,9 @@
       <% if (hasEvents) { %>
         <%== "partials/eventList" %>
       <% } /* endif */ %>
+      <button class="js-scroll-top scroll-top" title="scroll to top" aria-label="scroll to top">
+        <%= helpers.includeSvg('chevronsUp') %>
+      </button>
       <p class='no-events-message js-no-events-message' style='display:none'>
         Nincsenek új események.
       </p>

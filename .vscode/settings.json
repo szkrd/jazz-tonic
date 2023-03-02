@@ -3,5 +3,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  "editor.insertSpaces": true
+  "editor.insertSpaces": true,
+  "files.associations": {
+    "*.tpl": "html"
+  }
 }
