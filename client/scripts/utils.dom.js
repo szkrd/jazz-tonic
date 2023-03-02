@@ -13,10 +13,12 @@ window.pv.utils.dom = (() => {
     el.dispatchEvent(event);
   }
 
-  function getInnerText(selectorOrEl, rootEl) {
+  function getInnerText(selectorOrEl, rootEl, silent = false) {
     const el = selectorOrEl instanceof HTMLElement ? selectorOrEl : $(selectorOrEl, rootEl);
     if (!el) {
-      log.warn('Element for not found.', { selectorOrEl, rootEl });
+      if (!silent) {
+        log.warn(`Element ${selectorOrEl} not found.`, { selectorOrEl, rootEl });
+      }
       return '';
     }
     return el.innerText.trim();

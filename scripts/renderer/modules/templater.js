@@ -17,6 +17,10 @@ function showIf(bool, val) {
   return val && bool ? String(val) : '';
 }
 
+function displayNoneIf(bool) {
+  return bool ? 'style="display:none"' : '';
+}
+
 /**
  * Include a tpl in this file as a javascript variable attached
  * to the pv.templates object. If the magic INNER_CONTENT section
@@ -80,7 +84,7 @@ function linkJs(fn) {
   return `<script src='${htmlFn}?r=${getFileHash(localFn)}'></script>`;
 }
 
-const helpers = { showIf, templatize, include, includeSvg, linkCss, linkJs };
+const helpers = { showIf, displayNoneIf, templatize, include, includeSvg, linkCss, linkJs };
 
 // NON HELPER FUNCTIONS
 // ====================

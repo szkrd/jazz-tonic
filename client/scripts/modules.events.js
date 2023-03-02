@@ -155,7 +155,7 @@ window.pv.modules.events = (() => {
       const name = getInnerText('.js-event-name', el);
       const startDateTimeNumber = parseInt($('.js-event-date', el).dataset.date, 10);
       const startDateTimeFormatted = getInnerText('.js-event-date', el);
-      const genre = getInnerText('.js-event-genre', el);
+      const genre = getInnerText('.js-event-genre', el, true); // silent, if the element is not found, which is possible (no genre data)
       const tags = $$('.js-event-tag', el).map((tagEl) => getInnerText(tagEl));
       const place = {
         name: getInnerText('.js-event-place-name', el),
