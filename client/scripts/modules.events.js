@@ -68,7 +68,8 @@ window.pv.modules.events = (() => {
    * `tag:jazz` - search this word (jazz) only in the genres (how about tags?)
    */
   function searchAndFilter(text) {
-    storage.save('searchTerm', text);
+    // if we want to persist the search
+    // storage.save('searchTerm', text);
     if (!text) {
       events.filter((event) => !event.expired).forEach(showEvent); // arrays are OR based
       updateEventCountDisplay();

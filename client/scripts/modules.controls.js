@@ -25,7 +25,8 @@ window.pv.modules.controls = (() => {
     const searchInput = $('.js-search-input');
     showEl(searchInput);
     const { searchAndFilter } = modules.events;
-    searchInput.value = storage.load('searchTerm');
+    const savedValue = storage.loadAndClear('searchTerm');
+    searchInput.value = savedValue || '';
     searchInput.addEventListener(
       'input',
       _.debounce((keyEvt) => {
@@ -111,7 +112,7 @@ window.pv.modules.controls = (() => {
   function setupLogoRootLink() {
     const el = $('.js-home-link');
     el.addEventListener('click', () => {
-      storage.save('searchTerm', '');
+      storage.save('searchTerm', null);
     });
   }
 
