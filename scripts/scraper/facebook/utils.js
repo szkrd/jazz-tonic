@@ -1,6 +1,6 @@
 const fs = require('fs');
 const chalk = require('chalk');
-const config = require('./config.json');
+const config = require('../../../scraperConfig.template.json');
 
 const getQuitFn = (pup = { browser: null, page: null }) => {
   return async function quit(code = 0, message = '') {
@@ -235,4 +235,5 @@ module.exports = {
   getQuitFn,
   getPuppArgs,
   sleep,
+  config,
 };

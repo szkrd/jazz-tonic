@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer-core');
-const config = require('./config.json');
-const { getQuitFn, getPuppArgs, log, scraper } = require('./utils');
+const { getQuitFn, getPuppArgs, log, scraper, config } = require('./utils');
 
 (async () => {
   const pup = { browser: null, page: null };
