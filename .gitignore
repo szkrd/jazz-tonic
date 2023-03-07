@@ -111,6 +111,7 @@ temp.txt
 client/index.html
 client/data-*/*.js
 client/data-*/*.html
+/client-*
 data/*.json
 data/*.xlsx
 output.txt
@@ -121,5 +122,9 @@ scripts/scraper/session.json
 scripts/scraper/session.json.old
 scraperConfig.json
 rendererConfig.json
-rendererConfig.json
+rendererConfig.*.json
+!rendererConfig.template.json
+parserConfig.json
+parserConfig.*.json
+!parserConfig.template.json
 templates/*.dump

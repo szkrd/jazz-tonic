@@ -6,7 +6,7 @@ const config = require('./config');
 const log = require('../../parser/modules/log');
 
 const templatesDir = './templates';
-const outDir = './client';
+const { outDir } = config;
 
 const __templateCache = {};
 const __partialCache = {};

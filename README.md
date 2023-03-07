@@ -32,6 +32,9 @@ After opening the project, install the dependencies with `npm i` (from the termi
 
 Serious errors will break the parser and it will bail out with a non zero exit code.
 
+Now you can override the configuration itself from the commandline:
+`node scripts/parser --config=parserConfig.foobar.json`
+
 ### renderer
 
 - uses **templates/index.hbs** which is a [handlebars](https://handlebarsjs.com/guide/#what-is-handlebars) template
@@ -41,6 +44,12 @@ Serious errors will break the parser and it will bail out with a non zero exit c
 - output of the html file is in **client/index.html**
 - a dump of the used template data can be found in the **templateData.dump**, next to the hbs file
   (which is based on the **main.json** created by the parser)
+- overriding the configuration itself:
+  - use cli parameter: `node scripts/renderer --config=rendererConfig.foobar.json`
+  - this way you can have different configurations
+  - for example you can have multiple _outDir_ targets (for example _client-festivals_)
+  - if you name the output dir like `client-whatever` then `client-*` dirs are git ignored already
+  - static files are copied from `./client`
 
 ### scraper
 

@@ -1,11 +1,18 @@
 const config = require('../../../rendererConfig.template.json');
 const log = require('../../parser/modules/log');
 
+let userConf = 'rendererConfig.json';
 try {
-  const localConfig = require('../../../rendererConfig.json');
+  userConf =
+    process.argv
+      .slice(2)
+      .find((arg) => arg.startsWith('--config='))
+      ?.split('=')[1] || userConf;
+  const localConfig = require(`../../../${userConf}`);
   Object.assign(config, localConfig);
+  log.success(`Found "${userConf}", shallow overriding default values.`);
 } catch {
-  console.info('Could not find "rendererConfig.json", using the default values from the template.');
+  log.warning(`Could not find "${userConf}", using default values from the config template.`);
 }
 
 // validations

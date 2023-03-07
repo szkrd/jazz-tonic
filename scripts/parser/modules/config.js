@@ -3,11 +3,18 @@ const path = require('path');
 const config = require('../../../parserConfig.template.json');
 const log = require('./log');
 
+let userConf = 'parserConfig.json';
 try {
-  const localConfig = require('../../../parserConfig.json');
+  userConf =
+    process.argv
+      .slice(2)
+      .find((arg) => arg.startsWith('--config='))
+      ?.split('=')[1] || userConf;
+  const localConfig = require(`../../../${userConf}`);
   Object.assign(config, localConfig);
+  log.success(`Found "${userConf}", shallow overriding default values.`);
 } catch {
-  console.info('Could not find "parserConfig.json", using the default values from the template.');
+  log.warning(`Could not find "${userConf}", using default values from the config template.`);
 }
 
 const mainExcelFile = path.join(

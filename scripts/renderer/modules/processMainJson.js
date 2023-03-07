@@ -10,7 +10,7 @@ const log = require('../../parser/modules/log');
 const config = require('./config');
 const templater = require('./templater');
 
-const outDir = './client';
+const { outDir } = config;
 const templatesDir = './templates';
 
 module.exports = function processMainJson(mainJson) {

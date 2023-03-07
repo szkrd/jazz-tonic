@@ -1,4 +1,6 @@
 {
+  "outDir": "./client",
+  "inputJson": "./data/main.json",
   "minifyHtml": true,
   "maximumDateRange": [2, "month"],
   "useFakeDate": false,
